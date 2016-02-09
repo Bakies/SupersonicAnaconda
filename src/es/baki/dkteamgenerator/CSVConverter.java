@@ -27,7 +27,7 @@ public class CSVConverter {
 			String line = scan.nextLine();
 			String[] lines = line.split(",");
 			try { 
-				char pos = lines[0].replace("\"", "").charAt(lines[0].length() == 4 ? 1 : 0);
+				char pos = lines[0].replace("\"", "").charAt(lines[0].length() == 2 ? 1 : 0);
 
 				String name = lines[1].replace("\"", "");
 				int salary = Integer.parseInt(lines[2]);

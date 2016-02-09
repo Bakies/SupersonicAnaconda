@@ -26,11 +26,18 @@ public class NHLTeamGenerator {
 	public NHLTeamGenerator() {
 		converter = new CSVConverter(CSVConverter.NHL);
 		playerList = converter.getNHLList();
+		
+		team = new ArrayList<>();
 
 		generateTeam();
-
-		for (NHLPlayer p : team) 
-			System.out.println(p.getName());
+		int salaryTotal = 0;
+		System.out.println("Done generating");
+		System.out.printf("%-20s|%4s|%5s|%6s%n", "Name", "Pos", "$$$$", "ppg");
+		for (NHLPlayer p : team) { 
+			System.out.printf("%-20s|%-4s|%-5d|%-6f%n", p.getName(), " " + p.getPos() + " ", p.getSalary(), p.getPpg());
+			salaryTotal += p.getSalary();
+		}
+		System.out.println("Total team cost: " + salaryTotal);
 			
 		
 	}
@@ -46,46 +53,61 @@ public class NHLTeamGenerator {
 		}
 		double maxRating = -100000;
 		NHLPlayer playerToAdd = null;
+		ArrayList<NHLPlayer> loopList = new ArrayList<>();
+		loopList.addAll(playerList);
 		while (C + W + D + G != 0) {
 			maxRating = -100000000;
-			for (NHLPlayer p : playerList) { 
+			
+			for (NHLPlayer p : loopList) { 
 				maxRating = Math.max(p.getRating(), maxRating);
 				if (maxRating == p.getRating()) { 
 					playerToAdd = p;
-					System.out.println("Highest rating: " + p.getName());
+//					System.out.println("Highest rating: " + p.getName());
 				}
 			}
 			if(playerToAdd.getPos() == 'C') { 
-				if (C == 0)
+				if (C == 0) {
+					loopList.remove(playerToAdd);
 					continue;
+				}
 				C--;
 			} else if (playerToAdd.getPos() == 'W') { 
-				if (W == 0)
+				if (W == 0) {
+					loopList.remove(playerToAdd);
 					continue;
+				}
 				W--;
 			} else if (playerToAdd.getPos() == 'D') { 
-				if (D == 0)
+				if (D == 0){
+					loopList.remove(playerToAdd);
 					continue;
+				}
 				D--;
 			} else if (playerToAdd.getPos() == 'G') { 
-				if (G == 0)
+				if (G == 0) { 
+					loopList.remove(playerToAdd);
 					continue;
+				}
 				G--;
 			}
-			playerList.remove(playerToAdd);
+			System.out.printf("Added [%s]%-20s C:%d W:%d D:%d G:%d%n", playerToAdd.getPos() + "", playerToAdd.getName(), C, W, D, G);
 			team.add(playerToAdd);
+			loopList.remove(playerToAdd);
 		}
+		loopList.removeAll(playerList);
+		loopList.addAll(playerList);
 		maxRating = -1000000;
-		for (NHLPlayer p : playerList) { 
+		for (NHLPlayer p : loopList) { 
 			if (p.getPos() == 'G')
 				continue;
 			maxRating = Math.max(p.getRating(), maxRating);
 			if (maxRating == p.getRating()) { 
 				playerToAdd = p;
+				System.out.println("UTIL: " + p.getName());
 			}
 		}
 		team.add(playerToAdd);
-		playerList.remove(playerToAdd);
+		loopList.remove(playerToAdd);
 
 	}
 }
