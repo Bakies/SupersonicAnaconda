@@ -46,7 +46,7 @@ public class NHLTeamGenerator {
 		for (Player p : playerList) { 
 			bestFit.addData(p.getSalary(), p.getPpg());
 		}
-		System.out.println("y = " + bestFit.getSlope() + "x + "  + bestFit.getIntercept());
+		System.out.println("y = " + bestFit.getSlope() + "x + "  + bestFit.getIntercept()); 	
 		for (NHLPlayer p : playerList) { 
 			p.setRating(p.getPpg() - (p.getPpg() * bestFit.getSlope() + bestFit.getIntercept()));
 //			System.out.println(p.getName() + ": " + p.getRating());
