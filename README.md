@@ -1,2 +1,2 @@
 # Supersonce Anaconda
-A repo for private projects
+A repo for project ideas
