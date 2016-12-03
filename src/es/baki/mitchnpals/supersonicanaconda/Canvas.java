@@ -3,8 +3,30 @@ package es.baki.mitchnpals.supersonicanaconda;
 public class Canvas {
 	private int height, width; 
 	private int[][] canvas;
+	
+	public Canvas(int height, int width, Canvas canvas) {
+		this(height, width);
+		for (int x = 0; x < canvas.width && x < this.width; x++){
+			for (int y = 0; y < canvas.height && y < this.height; y++){
+				this.canvas[x][y] = canvas.canvas[x][y];
+			}
+		}
+	}
+	
 	public Canvas(int height, int width) {
-		this.height = this.width;
+		this.height = height;
+		this.width = width;
 		canvas = new int[width][height];
+	}
+	
+	public void set(int x, int y, final int color) {
+		canvas[x][y] = color;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	public int getWidth() {
+		return width; 
 	}
 }
