@@ -1,28 +1,45 @@
 package es.baki.mitchnpals.supersonicanaconda;
 
 public class Interpreter {
-	public static final int LIGHT_RED = 0;
-	public static final int RED = 1;
-	public static final int DARK_RED = 2;
-	public static final int LIGHT_YELLOW = 3;
-	public static final int YELLOW = 4;
-	public static final int DARK_YELLOW = 5;
-	public static final int LIGHT_GREEN = 6;
-	public static final int GREEN = 7;
-	public static final int DARK_GREEN = 8;
-	public static final int LIGHT_CYAN = 9;
-	public static final int CYAN = 10;
-	public static final int DARK_CYAN = 11;
-	public static final int LIGHT_BLUE = 12;
-	public static final int BLUE = 13;
-	public static final int DARK_BLUE = 14;
-	public static final int LIGHT_MAGENTA = 15;
-	public static final int MAGENTA = 16;
-	public static final int DARK_MAGENTA = 17;
+	public static Color LIGHT_RED = new Color(0,0);
+	public static Color RED= new Color(0,1);
+	public static Color DARK_RED = new Color(0,2);
+	public static Color LIGHT_YELLOW = new Color(1,0);
+	public static Color YELLOW = new Color(1,1);
+	public static Color DARK_YELLOW = new Color(1,2);
+	public static Color LIGHT_GREEN = new Color(2,0);
+	public static Color GREEN= new Color(2,1);
+	public static Color DARK_GREEN= new Color(2,2);
+	public static Color LIGHT_CYAN= new Color(3,0);
+	public static Color CYAN= new Color(3,1);
+	public static Color DARK_CYAN= new Color(3,2);
+	public static Color LIGHT_BLUE= new Color(4,0);
+	public static Color BLUE= new Color(4,1);
+	public static Color DARK_BLUE= new Color(4,2);
+	public static Color LIGHT_MAGENTA= new Color(5,0);
+	public static Color MAGENTA= new Color(5,1);
+	public static Color DARK_MAGENTA= new Color(5,2);
 	
+	private Stack stack;
+	private Canvas canvas;
+	private int x = 1, y = 0;
+	private int[][] position;
 	
-	public Interpreter() {
+	public Interpreter(Canvas canvas) {
+		stack = new Stack();
+		this.canvas = canvas;
+		position = new int[canvas.getWidth()][canvas.getHeight()];
+	}
+	
+	public void run() {
+		while(step());
+	}
+	
+	public boolean step() {
 		
+		
+		
+		return true;
 	}
 
 	public static void main(String[] args) {
