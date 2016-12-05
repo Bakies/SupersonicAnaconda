@@ -23,7 +23,8 @@ public class Stack {
 		
 	}
 	public void divide(){
-		
+		// TODO
+	}
 	
 	/** 
 	 *  Pops the top two values off the stack,

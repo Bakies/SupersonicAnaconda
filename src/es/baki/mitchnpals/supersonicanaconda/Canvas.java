@@ -1,8 +1,10 @@
 package es.baki.mitchnpals.supersonicanaconda;
 
+import es.baki.mitchnpals.supersonicanaconda.Colors.Color;
+
 public class Canvas {
 	private int height, width; 
-	private int[][] canvas;
+	private Color[][] canvas;
 	
 	public Canvas(int height, int width, Canvas canvas) {
 		this(height, width);
@@ -16,10 +18,10 @@ public class Canvas {
 	public Canvas(int height, int width) {
 		this.height = height;
 		this.width = width;
-		canvas = new int[width][height];
+		canvas = new Color[width][height];
 	}
 	
-	public void set(int x, int y, final int color) {
+	public void set(int x, int y, Color color) {
 		canvas[x][y] = color;
 	}
 	
@@ -28,5 +30,9 @@ public class Canvas {
 	}
 	public int getWidth() {
 		return width; 
+	}
+
+	public Color getColor(int x, int y) {
+		return canvas[x][y];
 	}
 }

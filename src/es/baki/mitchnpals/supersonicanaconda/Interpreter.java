@@ -2,27 +2,7 @@ package es.baki.mitchnpals.supersonicanaconda;
 import java.util.ArrayList;
 
 
-public class Interpreter {
-	public static Color LIGHT_RED = new Color(0,0);
-	public static Color RED= new Color(0,1);
-	public static Color DARK_RED = new Color(0,2);
-	public static Color LIGHT_YELLOW = new Color(1,0);
-	public static Color YELLOW = new Color(1,1);
-	public static Color DARK_YELLOW = new Color(1,2);
-	public static Color LIGHT_GREEN = new Color(2,0);
-	public static Color GREEN= new Color(2,1);
-	public static Color DARK_GREEN= new Color(2,2);
-	public static Color LIGHT_CYAN= new Color(3,0);
-	public static Color CYAN= new Color(3,1);
-	public static Color DARK_CYAN= new Color(3,2);
-	public static Color LIGHT_BLUE= new Color(4,0);
-	public static Color BLUE= new Color(4,1);
-	public static Color DARK_BLUE= new Color(4,2);
-	public static Color LIGHT_MAGENTA= new Color(5,0);
-	public static Color MAGENTA= new Color(5,1);
-	public static Color DARK_MAGENTA= new Color(5,2);
-	
-	
+public class Interpreter {	
 	private static ArrayList<String> checked;
 	private Stack stack;
 	private Canvas canvas;
@@ -44,10 +24,8 @@ public class Interpreter {
 		 * but make jon do it
 		 * because he's a piece of shit
 		 */
-		deltaHue = canvas.getColor(posX,posY).getHue() - canvas.getColor(posX + x, posY + y).getHue();
-
-		deltaDarkness = canvas.getColor(posX,posY).getDarkness() - canvas.getColor(posX + x, posY + y).getDarkness();
-		
+		deltaHue = Colors.getHueDifference(canvas.getColor(posX,posY), canvas.getColor(posX + x, posY + y));
+		deltaDarkness = Colors.getDarknessDifference(canvas.getColor(posX,posY), canvas.getColor(posX + x, posY + y));		
 		op = deltaDarkness + deltaHue *10;
 		checked = new ArrayList<String>();
 		if(op == 1){
