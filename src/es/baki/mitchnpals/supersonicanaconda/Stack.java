@@ -22,6 +22,8 @@ public class Stack {
 		return stack.remove(0);
 		
 	}
+	public void divide(){
+		
 	
 	/** 
 	 *  Pops the top two values off the stack,
