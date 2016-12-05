@@ -1,24 +1,24 @@
 package es.baki.mitchnpals.supersonicanaconda;
 
 public class Interpreter {
-	public static Color LIGHT_RED = new Color(0,0);
-	public static Color RED= new Color(0,1);
-	public static Color DARK_RED = new Color(0,2);
-	public static Color LIGHT_YELLOW = new Color(1,0);
-	public static Color YELLOW = new Color(1,1);
-	public static Color DARK_YELLOW = new Color(1,2);
-	public static Color LIGHT_GREEN = new Color(2,0);
-	public static Color GREEN= new Color(2,1);
-	public static Color DARK_GREEN= new Color(2,2);
-	public static Color LIGHT_CYAN= new Color(3,0);
-	public static Color CYAN= new Color(3,1);
-	public static Color DARK_CYAN= new Color(3,2);
-	public static Color LIGHT_BLUE= new Color(4,0);
-	public static Color BLUE= new Color(4,1);
-	public static Color DARK_BLUE= new Color(4,2);
-	public static Color LIGHT_MAGENTA= new Color(5,0);
-	public static Color MAGENTA= new Color(5,1);
-	public static Color DARK_MAGENTA= new Color(5,2);
+	public static Colors LIGHT_RED = new Colors(0,0);
+	public static Colors RED= new Colors(0,1);
+	public static Colors DARK_RED = new Colors(0,2);
+	public static Colors LIGHT_YELLOW = new Colors(1,0);
+	public static Colors YELLOW = new Colors(1,1);
+	public static Colors DARK_YELLOW = new Colors(1,2);
+	public static Colors LIGHT_GREEN = new Colors(2,0);
+	public static Colors GREEN= new Colors(2,1);
+	public static Colors DARK_GREEN= new Colors(2,2);
+	public static Colors LIGHT_CYAN= new Colors(3,0);
+	public static Colors CYAN= new Colors(3,1);
+	public static Colors DARK_CYAN= new Colors(3,2);
+	public static Colors LIGHT_BLUE= new Colors(4,0);
+	public static Colors BLUE= new Colors(4,1);
+	public static Colors DARK_BLUE= new Colors(4,2);
+	public static Colors LIGHT_MAGENTA= new Colors(5,0);
+	public static Colors MAGENTA= new Colors(5,1);
+	public static Colors DARK_MAGENTA= new Colors(5,2);
 	
 	private Stack stack;
 	private Canvas canvas;
