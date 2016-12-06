@@ -68,7 +68,7 @@ public class Canvas {
 		StringBuilder ret = new StringBuilder();
 		for (int x = 0; x < width; x ++) {
 			for (int y = 0; y < height; y ++) {
-				ret.append(String.format(" %2d ", canvas[x][y].getIndex()));
+				ret.append(String.format("%2d ", canvas[x][y].getIndex()));
 			}
 			ret.append(String.format("%n"));
 		}
@@ -79,7 +79,7 @@ public class Canvas {
 		StringBuilder ret = new StringBuilder();
 		for (int x = 0; x < width; x ++) {
 			for (int y = 0; y < height; y ++) {
-				ret.append(String.format(" %13s ", canvas[x][y].getName()));
+				ret.append(String.format("%-13s ", canvas[x][y].getName()));
 			}
 			ret.substring(0, ret.length() - 1);
 			ret.append(String.format("%n"));
@@ -91,11 +91,9 @@ public class Canvas {
 	public static void main(String...strings) {
 		Canvas c = new Canvas(10);
 		c.set(0, 0, Color.BLACK);
+		c.set(0, 1, Color.LIGHT_MAGENTA);
 		System.out.println(c);
 		System.out.println(c.toReadableString());
 		
 	}
-	
-	
-	
 }
