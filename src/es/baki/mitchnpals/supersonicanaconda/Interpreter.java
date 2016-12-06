@@ -7,7 +7,7 @@ public class Interpreter {
 	private Codel codel;
 	private Stack stack;
 	private Canvas canvas;
-	private int x = 1, y = 0, currentHue, deltaHue, currentDarkness, deltaDarkness, posX = 0, posY = 0, op, wait = 0;
+	private int x = 1, y = 0, deltaHue, deltaDarkness, posX = 0, posY = 0, op, wait = 0;
 	private int cc = 0, dp = 0;//dp right = 0, d= 1, l = 2, up = 3
 							   //cc 0 is left 1 is right
 	
@@ -17,10 +17,15 @@ public class Interpreter {
 	}
 	
 	public void run() {
-		while(step());
+		try {
+			while(step());
+		} catch (Exception e) {
+			System.out.println("Skipped an OP");
+			run();
+		}
 	}
 	
-	public boolean step() {
+	public boolean step() throws Exception {
 		checked = new ArrayList<Codel>();
 		codel = Codel.getFarthest(dp, cc, checked);
 		//posX = codel.getX();
@@ -35,10 +40,11 @@ public class Interpreter {
 				changeDirection(1);
 			if(wait == 8)
 				return false;
+		} else {
+			deltaHue = canvas.getColor(posX,posY).getHueDifference(canvas.getColor(posX + x, posY + y));
+			deltaDarkness = canvas.getColor(posX,posY).getDarknessDifference(canvas.getColor(posX + x, posY + y));		
+			op = deltaDarkness + deltaHue *10;
 		}
-		deltaHue = Colors.getHueDifference(canvas.getColor(posX,posY), canvas.getColor(posX + x, posY + y));
-		deltaDarkness = Colors.getDarknessDifference(canvas.getColor(posX,posY), canvas.getColor(posX + x, posY + y));		
-		op = deltaDarkness + deltaHue *10;
 		
 		if(op == 1){
 			stack.push(checked.size());
@@ -59,9 +65,9 @@ public class Interpreter {
 		}else if(op == 30){
 			stack.greater();
 		}else if(op == 31){
-			 changeDirection(stack.pointer());
+				changeDirection(stack.pointer());
 		}else if(op == 32){
-			changeCC(stack.switch_());
+				changeCC(stack.switch_());
 		}else if(op == 40){
 			stack.duplicate();
 		}else if(op == 41){
