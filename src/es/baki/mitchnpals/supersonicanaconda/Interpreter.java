@@ -29,7 +29,7 @@ public class Interpreter {
 		op = deltaDarkness + deltaHue *10;
 		checked = new ArrayList<String>();
 		if(op == 1){
-			stack.push(5);
+			stack.push(checkSurrounding(posX, posY));
 		}else if(op == 2){
 			stack.pop();
 		}else if(op == 10){
@@ -76,13 +76,13 @@ public class Interpreter {
 	public static int checkSurrounding(int x, int y){
 		checked.add(Integer.toString(x) + "," + Integer.toString(y));
 		int total = 1;
-		if(canvas.getColor(x, y).equals(canvas.getColor(x, y+1)) && !checked.contains(Integer.toString(x) + "," + Integer.toString(y+1)))
+		if(canvas.getColor(x, y+1) != null && canvas.getColor(x, y).equals(canvas.getColor(x, y+1)) && !checked.contains(Integer.toString(x) + "," + Integer.toString(y+1)))
 				total+= checkSurrounding(x,y+1);
-		if(y !=0 && canvas.getColor(x, y).equals(canvas.getColor(x, y-1))&& !checked.contains(Integer.toString(x) + "," + Integer.toString(y-1)))
+		if(y !=0 && canvas.getColor(x, y-1) != null && canvas.getColor(x, y).equals(canvas.getColor(x, y-1))&& !checked.contains(Integer.toString(x) + "," + Integer.toString(y-1)))
 				total+= checkSurrounding(x,y-1);
-		if(canvas.getColor(x, y).equals(canvas.getColor(x+1, y))&& !checked.contains(Integer.toString(x+1) + "," + Integer.toString(y)))
+		if(canvas.getColor(x+1, y) != null && canvas.getColor(x, y).equals(canvas.getColor(x+1, y))&& !checked.contains(Integer.toString(x+1) + "," + Integer.toString(y)))
 				total+= checkSurrounding(x+1,y);
-		if(x !=0 && canvas.getColor(x, y).equals(canvas.getColor(x-1, y))&& !checked.contains(Integer.toString(x-1) + "," + Integer.toString(y)))
+		if(x !=0 && canvas.getColor(x-1, y) != null && canvas.getColor(x, y).equals(canvas.getColor(x-1, y))&& !checked.contains(Integer.toString(x-1) + "," + Integer.toString(y)))
 				total+= checkSurrounding(x-1,y);
 		
 		return total;
