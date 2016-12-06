@@ -42,7 +42,7 @@ public class Canvas {
 	}
 
 	public Color getColor(int x, int y) {
-		if (x == 0 || y == 0 || x >= width || y >= height)
+		if (x < 0 || y < 0 || x >= width || y >= height)
 			return null;
 		return canvas[x][y];
 	}
