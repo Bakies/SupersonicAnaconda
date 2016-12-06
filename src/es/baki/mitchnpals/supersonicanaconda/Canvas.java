@@ -64,6 +64,17 @@ public class Canvas {
 		
 	}
 	
+	public String toString() {
+		String ret = "";
+		for (int x = 0; x < width; x ++) {
+			for (int y = 0; y < height; y ++) {
+				ret += canvas[x][y].getIndex();
+			}
+			ret += String.format("%n");
+		}
+		return ret;
+	}
+	
 	
 	
 }
