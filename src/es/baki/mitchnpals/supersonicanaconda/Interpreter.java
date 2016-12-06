@@ -47,7 +47,7 @@ public class Interpreter {
 		}else if(op == 30){
 			stack.greater();
 		}else if(op == 31){
-			stack.pointer();
+			changeDirection(stack.pointer());
 		}else if(op == 32){
 			stack.switch_();
 		}else if(op == 40){
@@ -73,7 +73,37 @@ public class Interpreter {
 		
 		return true;
 	}
-	public static int checkSurrounding(int x, int y){
+	public void changeDirection(int x){
+		x = x % 4;
+		for(int i = 0; i < x; i++){
+			if(this.x == 1 && this.y == 0){
+				directionDown();
+			}else if(this.x == 0 && this.y == 1){
+				directionLeft();
+			}else if(this.x == -1 && this.y == 0){
+				directionUp();
+			}else if(this.x == 0 && this.y == -1){
+				directionRight();
+			}
+		}
+	}
+	public void directionRight(){
+		x = 1;
+		y = 0;
+	}
+	public void directionDown(){
+		x = 0;
+		y = 1;
+	}
+	public void directionLeft(){
+		x = -1;
+		y = 0;
+	}
+	public void directionUp(){
+		x = 0;
+		y = -1;
+	}
+	public int checkSurrounding(int x, int y){
 		checked.add(Integer.toString(x) + "," + Integer.toString(y));
 		int total = 1;
 		if(canvas.getColor(x, y+1) != null && canvas.getColor(x, y).equals(canvas.getColor(x, y+1)) && !checked.contains(Integer.toString(x) + "," + Integer.toString(y+1)))
@@ -88,24 +118,7 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		canvas = new Canvas(4,3);
-		canvas.set(0, 0, Color.YELLOW);
-		canvas.set(0, 1, Color.YELLOW);
-		canvas.set(0, 2, Color.YELLOW);
-		canvas.set(1, 0, Color.YELLOW);
-		canvas.set(1, 2, Color.YELLOW);
-		canvas.set(1, 1, Color.YELLOW);
-		canvas.set(2, 0, Color.YELLOW);
-		canvas.set(2, 2, Color.YELLOW);
-		canvas.set(2, 1, Color.BLACK);
-		canvas.set(3, 0, Color.BLACK);
-		canvas.set(3, 1, Color.BLACK);
-		canvas.set(3, 2, Color.BLACK);
 		
-		checked = new ArrayList<String>();
-		System.out.println(checkSurrounding(0,0));
-
 	}
 
 }
