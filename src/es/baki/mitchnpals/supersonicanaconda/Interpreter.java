@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Interpreter {	
 	private static ArrayList<String> checked;
-	private Stack stack;
-	private Canvas canvas;
+	private static Stack stack;
+	private static Canvas canvas;
 	private int x = 1, y = 0, currentHue, deltaHue, currentDarkness, deltaDarkness, posX = 0, posY = 0, op;
 	
 	public Interpreter(Canvas canvas) {
@@ -73,24 +73,38 @@ public class Interpreter {
 		
 		return true;
 	}
-	public int checkSurrounding(int x, int y){
+	public static int checkSurrounding(int x, int y){
 		checked.add(Integer.toString(x) + "," + Integer.toString(y));
-		int total = 0;
+		int total = 1;
 		if(canvas.getColor(x, y).equals(canvas.getColor(x, y+1)) && !checked.contains(Integer.toString(x) + "," + Integer.toString(y+1)))
-				total+= 1 + checkSurrounding(x,y+1);
-		if(canvas.getColor(x, y).equals(canvas.getColor(x, y-1))&& !checked.contains(Integer.toString(x) + "," + Integer.toString(y-1)) && y !=0)
-				total+= 1 + checkSurrounding(x,y-1);
+				total+= checkSurrounding(x,y+1);
+		if(y !=0 && canvas.getColor(x, y).equals(canvas.getColor(x, y-1))&& !checked.contains(Integer.toString(x) + "," + Integer.toString(y-1)))
+				total+= checkSurrounding(x,y-1);
 		if(canvas.getColor(x, y).equals(canvas.getColor(x+1, y))&& !checked.contains(Integer.toString(x+1) + "," + Integer.toString(y)))
-				total+= 1 + checkSurrounding(x+1,y);
-		if(canvas.getColor(x, y).equals(canvas.getColor(x-1, y))&& !checked.contains(Integer.toString(x-1) + "," + Integer.toString(y)) && x != 0)
-				total+= 1 + checkSurrounding(x-1,y);
+				total+= checkSurrounding(x+1,y);
+		if(x !=0 && canvas.getColor(x, y).equals(canvas.getColor(x-1, y))&& !checked.contains(Integer.toString(x-1) + "," + Integer.toString(y)))
+				total+= checkSurrounding(x-1,y);
 		
-		return 0;
+		return total;
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Canvas c1 = new Canvas(4,3);
+		canvas = new Canvas(4,3);
+		canvas.set(0, 0, Color.YELLOW);
+		canvas.set(0, 1, Color.YELLOW);
+		canvas.set(0, 2, Color.YELLOW);
+		canvas.set(1, 0, Color.YELLOW);
+		canvas.set(1, 2, Color.YELLOW);
+		canvas.set(1, 1, Color.YELLOW);
+		canvas.set(2, 0, Color.YELLOW);
+		canvas.set(2, 2, Color.YELLOW);
+		canvas.set(2, 1, Color.BLACK);
+		canvas.set(3, 0, Color.BLACK);
+		canvas.set(3, 1, Color.BLACK);
+		canvas.set(3, 2, Color.BLACK);
 		
+		checked = new ArrayList<String>();
+		System.out.println(checkSurrounding(0,0));
 
 	}
 
