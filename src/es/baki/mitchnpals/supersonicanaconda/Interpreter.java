@@ -74,20 +74,23 @@ public class Interpreter {
 		return true;
 	}
 	public int checkSurrounding(int x, int y){
-		int total = 1;
-		if(canvas.getColor(x, y).equals(canvas.getColor(x, y+1)))
-				total+= checkSurrounding(x,y+1);
-		if(canvas.getColor(x, y).equals(canvas.getColor(x, y-1)))
-				total+= checkSurrounding(x,y-1);
-		if(canvas.getColor(x, y).equals(canvas.getColor(x+1, y)))
-				total+= checkSurrounding(x+1,y);
-		if(canvas.getColor(x, y).equals(canvas.getColor(x-1, y)))
-				total+= checkSurrounding(x-1,y);
+		checked.add(Integer.toString(x) + "," + Integer.toString(y));
+		int total = 0;
+		if(canvas.getColor(x, y).equals(canvas.getColor(x, y+1)) && !checked.contains(Integer.toString(x) + "," + Integer.toString(y+1)))
+				total+= 1 + checkSurrounding(x,y+1);
+		if(canvas.getColor(x, y).equals(canvas.getColor(x, y-1))&& !checked.contains(Integer.toString(x) + "," + Integer.toString(y-1)) && y !=0)
+				total+= 1 + checkSurrounding(x,y-1);
+		if(canvas.getColor(x, y).equals(canvas.getColor(x+1, y))&& !checked.contains(Integer.toString(x+1) + "," + Integer.toString(y)))
+				total+= 1 + checkSurrounding(x+1,y);
+		if(canvas.getColor(x, y).equals(canvas.getColor(x-1, y))&& !checked.contains(Integer.toString(x-1) + "," + Integer.toString(y)) && x != 0)
+				total+= 1 + checkSurrounding(x-1,y);
 		
-		return total;
+		return 0;
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Canvas c1 = new Canvas(4,3);
+		
 
 	}
 
