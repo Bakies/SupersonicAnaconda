@@ -1,7 +1,5 @@
 package es.baki.mitchnpals.supersonicanaconda;
 
-import es.baki.mitchnpals.supersonicanaconda.Colors.Color;
-
 public class Canvas {
 	private int height, width; 
 	private Color[][] canvas;
@@ -15,10 +13,19 @@ public class Canvas {
 		}
 	}
 	
+	public Canvas(int length) {
+		new Canvas(length, length);
+	}
+	
 	public Canvas(int height, int width) {
 		this.height = height;
 		this.width = width;
 		canvas = new Color[width][height];
+		for (int x = 0; x < width && x < this.width; x++){
+			for (int y = 0; y < height && y < this.height; y++){
+				canvas[x][y] = Color.WHITE;
+			}
+		}
 	}
 	
 	public void set(int x, int y, Color color) {
@@ -34,5 +41,17 @@ public class Canvas {
 
 	public Color getColor(int x, int y) {
 		return canvas[x][y];
+	}
+	
+	public void readFromPietFile() {
+		// TODO Read from piet file 
+	}
+	
+	public void readFromPNGFile() {
+		// TODO Read from png file
+	}
+	
+	public void saveToFile(String filename) {
+		// TODO Save canvas to file
 	}
 }

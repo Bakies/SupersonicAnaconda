@@ -1,64 +1,88 @@
 package es.baki.mitchnpals.supersonicanaconda;
 
+import java.util.ArrayList;
+
+/**
+ * A helper class for Color enum
+ */
 public class Colors {
-	public enum Color {
-		LIGHT_RED (0, 0),
-		RED (0, 1),
-		DARK_RED (0, 2),
-		LIGHT_YELLOW (1, 0),
-		YELLOW (1, 1),
-		DARK_YELLOW (1, 2),
-		LIGHT_GREEN (2, 0),
-		GREEN (2, 1),
-		DARK_GREEN (2, 2),
-		LIGHT_CYAN (3, 0),
-		CYAN (3, 1),
-		DARK_CYAN (3, 2),
-		LIGHT_BLUE (4, 0),
-		BLUE (4, 1),
-		DARK_BLUE (4, 2),
-		LIGHT_MAGENTA (5, 0),
-		MAGENTA (5, 1),
-		DARK_MAGENTA (5, 1);
-		
-		
-		private int hue, darkness;
-		Color(int hue, int darkness) {
-				this.hue = hue;
-				this.darkness = darkness;
-		}
-		
-		public int getHue() {
-			return hue;
-		}
-		public int getDarkness() {
-			return darkness;
-		}
-		
-		public int getHueDifference(Color c2) {
-			int ret = c2.getHue() - hue;
-			if (ret < 0) {
-				ret += 6;
-			}
-			ret %= 5;
-			return ret;
-		}		
-		public int getDarknessDifference(Color c2) {
-			int ret = c2.getDarkness() - darkness;
-			if (ret < 0) {
-				ret += 4;
-			}
-			ret %= 3;
-			return ret;
-		}
-	}
-	
+	private static ArrayList<Color> colors;
+	/**
+	 * @deprecated
+	 * @param c1
+	 * @param c2
+	 * @return
+	 */
 	public static int getHueDifference(Color c1, Color c2) {
 		return c1.getHueDifference(c2);
 	}
+	/**
+	 * @deprecated
+	 * @param c1
+	 * @param c2
+	 * @return
+	 */
 	public static int getDarknessDifference(Color c1, Color c2) {
 		return c1.getDarknessDifference(c2);
 	}
 	
-
+	private static void init() {
+		if (colors == null) {
+			colors = new ArrayList<>();
+			colors.add(Color.LIGHT_RED);
+			colors.add(Color.RED);
+			colors.add(Color.DARK_RED);
+			
+			colors.add(Color.LIGHT_YELLOW);
+			colors.add(Color.YELLOW);
+			colors.add(Color.DARK_YELLOW);
+			
+			colors.add(Color.LIGHT_GREEN);
+			colors.add(Color.GREEN);
+			colors.add(Color.DARK_GREEN);
+			
+			
+			colors.add(Color.LIGHT_CYAN);
+			colors.add(Color.CYAN);
+			colors.add(Color.DARK_CYAN);
+			
+			colors.add(Color.LIGHT_BLUE);
+			colors.add(Color.BLUE);
+			colors.add(Color.DARK_BLUE);
+			
+			colors.add(Color.LIGHT_MAGENTA);
+			colors.add(Color.MAGENTA);
+			colors.add(Color.DARK_MAGENTA);
+		}
+	}
+	
+	/**
+	 * gets based on index
+	 * does not return white or black
+	 * @param i
+	 * @return
+	 */
+	public static Color get(int i) {
+		if (colors == null)
+			init();
+		return colors.get(i);
+	}
+	
+	/**
+	 * Get based on hue and darkness
+	 * will not return black or white 
+	 * @param hue
+	 * @param darkness
+	 * @return
+	 */
+	public static Color get(int hue, int darkness){
+			if (colors == null)
+				init();
+			for (Color c : colors) {
+				if (c.getHue() == hue && c.getDarkness() == darkness)
+					return c;
+			}
+			return null;
+	}
+	
 }

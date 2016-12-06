@@ -22,8 +22,23 @@ public class Stack {
 		return stack.remove(0);
 		
 	}
-	public void divide(){
-		// TODO
+	
+	/**
+	 * Pops the top two values off the stack, calculates the integer division of the
+	 * second top value by the top value, and pushes the result back on the stack. If 
+	 * a divide by zero occurs, it is handled as an implementation-dependent error,
+	 *  though simply ignoring the command is recommended.
+	 *  
+	 *  returns false if a div by 0 occurs
+	 */
+	public boolean divide(){
+		int x = pop();
+		int y = pop();
+		if (x == 0) {
+			return false;
+		}
+		push(y / x);
+		return true;
 	}
 	
 	/** 
@@ -130,6 +145,8 @@ public class Stack {
 	 * simply ignoring the command is recommended.
 	 */
 	public void roll() {
+		
+		// TODO Figure out/Fix roll()
 		int num = pop();
 		int depth = pop();
 		
