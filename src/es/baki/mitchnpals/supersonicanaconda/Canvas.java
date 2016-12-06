@@ -29,6 +29,8 @@ public class Canvas {
 	}
 	
 	public void set(int x, int y, Color color) {
+		if (color == null)
+			color = Color.WHITE;
 		canvas[x][y] = color;
 	}
 	
