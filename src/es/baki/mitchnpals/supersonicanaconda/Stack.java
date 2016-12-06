@@ -3,6 +3,10 @@ package es.baki.mitchnpals.supersonicanaconda;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * For all functions, if there is not enough values in the stack for the op then the entire stack is destroyed
+ * @author jon
+ */
 public class Stack {
 	private ArrayList<Integer> stack = new ArrayList<Integer>();
 	
@@ -11,34 +15,37 @@ public class Stack {
 	 * @param x
 	 */
 	public void push(int x) {
-		stack.add(new Integer(x));
+		stack.add(0, new Integer(x));
 	}
 	
 	/**
 	 * Pops the top value off the stack and discards it.
 	 * @return
 	 */
-	public int pop() {
-		return stack.remove(0);
-		
+	public boolean pop() {
+		if (stack.size() == 0)
+			return false;
+		stack.remove(0);
+		return true;
 	}
 	
 	/**
 	 * Pops the top two values off the stack, calculates the integer division of the
 	 * second top value by the top value, and pushes the result back on the stack. If 
-	 * a divide by zero occurs, it is handled as an implementation-dependent error,
-	 *  though simply ignoring the command is recommended.
-	 *  
-	 *  returns false if a div by 0 occurs
+	 * a divide by zero occurs, the two values are destroyed and nothing is put on the stack.
 	 */
-	public boolean divide(){
-		int x = pop();
-		int y = pop();
+	public void divide(){
+		int x, y;
+		try {
+			x = out();
+			y = out();
+		} catch (Exception e) {
+			return;
+		}
 		if (x == 0) {
-			return false;
+			return;
 		}
 		push(y / x);
-		return true;
 	}
 	
 	/** 
@@ -46,8 +53,13 @@ public class Stack {
 	 *   adds them, and pushes the result back on the stack.
 	 */
 	public void add() {
-		int x = pop();
-		int y = pop();
+		int x, y;
+		try {
+			x = out();
+			y = out();
+		} catch (Exception e) {
+			return;
+		}
 		push(x + y);
 	}
 	
@@ -57,8 +69,13 @@ public class Stack {
 	 *  and pushes the result back on the stack.
 	 */
 	public void subtract() {
-		int x = pop();
-		int y = pop();
+		int x, y;
+		try {
+			x = out();
+			y = out();
+		} catch (Exception e) {
+			return;
+		}
 		push(y - x);
 	}
 	
@@ -66,8 +83,13 @@ public class Stack {
 	 * Pops the top two values off the stack, multiplies them, and pushes the result back on the stack.
 	 */
 	public void multiply() {
-		int x = pop();
-		int y = pop();
+		int x, y;
+		try {
+			x = out();
+			y = out();
+		} catch (Exception e) {
+			return;
+		}
 		push (x * y);		
 	}
 
@@ -75,17 +97,26 @@ public class Stack {
 	 * Pops the top two values off the stack, calculates the second top value modulo the top value, and pushes the result back on the stack. The result has the same sign as the divisor (the top value). If the top value is zero, this is a divide by zero error, which is handled as an implementation-dependent error, though simply ignoring the command is recommended.
 	 */
 	public void mod() {
-		int x = pop();
-		int y = pop();
-		push(y / x);
-		
+		int x, y;
+		try {
+			x = out();
+			y = out();
+		} catch (Exception e) {
+			return;
+		}
+		push(y % x);
 	}
 	
 	/**
 	 * Replaces the top value of the stack with 0 if it is non-zero, and 1 if it is zero.
 	 */
 	public void not() {
-		int x = pop();
+		int x;
+		try {
+			x = out();
+		} catch (Exception e) {
+			return;
+		}
 		if (x != 0) { 
 			push(0);
 		} else { 
@@ -99,8 +130,13 @@ public class Stack {
 	 *   and pushes 0 if it is not greater.
 	 */
 	public void greater() {
-		int x = pop();
-		int y = pop();
+		int x, y;
+		try {
+			x = out();
+			y = out();
+		} catch (Exception e) {
+			return;
+		}
 		if (y > x) {
 			push(1);
 		} else {
@@ -108,27 +144,34 @@ public class Stack {
 		}
 	}
 	/**
-	 * Returns pop()
+	 * Same as out, for clarity in the interpreter
 	 * @return
+	 * @throws Exception 
 	 */
-	public int pointer() {
-		return pop();
+	public int pointer() throws Exception {
+		return out();
 		
 	}
 	
 	/**
-	 * returns pop()
+	 * Same as out, for clarity in the interpreter
 	 * @return
+	 * @throws Exception 
 	 */
-	public int switch_() {
-		return pop();
+	public int switch_() throws Exception {
+		return out();
 	}
 	
 	/**
 	 * Pushes a copy of the top value on the stack on to the stack.
 	 */
 	public void duplicate() {
-		int x = pop();
+		int x;
+		try {
+			x = out();
+		} catch (Exception e) {
+			return;
+		}
 		push(x);
 		push(x);
 	}
@@ -145,8 +188,14 @@ public class Stack {
 	 * simply ignoring the command is recommended.
 	 */
 	public void roll() {
-		int depth = pop();
-		int num = pop();
+		int depth;
+		int num;
+		try {
+			depth = out();
+			num = out();
+		} catch (Exception e) {
+			return;
+		}
 		
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		
@@ -169,9 +218,17 @@ public class Stack {
 	/**
 	 * returns pop();
 	 * @return
+	 * @throws Exception 
 	 */
-	public int out() {
-		return pop();
+	public int out() throws Exception {
+		if (stack.size() == 0) {
+			throw new Exception();
+		}
+		return stack.remove(0);
+	}
+	
+	public boolean stackHasValues() {
+		return stack.size() != 0; 
 	}
 	
 	public String toString() {
