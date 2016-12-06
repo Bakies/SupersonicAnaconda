@@ -14,15 +14,15 @@ public class Canvas {
 	}
 	
 	public Canvas(int length) {
-		new Canvas(length, length);
+		this(length, length);
 	}
 	
 	public Canvas(int width, int height) {
 		this.height = height;
 		this.width = width;
 		canvas = new Color[width][height];
-		for (int x = 0; x < width && x < this.width; x++){
-			for (int y = 0; y < height && y < this.height; y++){
+		for (int x = 0; x < width; x++){
+			for (int y = 0; y < height; y++){
 				canvas[x][y] = Color.WHITE;
 			}
 		}
@@ -65,14 +65,35 @@ public class Canvas {
 	}
 	
 	public String toString() {
-		String ret = "";
+		StringBuilder ret = new StringBuilder();
 		for (int x = 0; x < width; x ++) {
 			for (int y = 0; y < height; y ++) {
-				ret += canvas[x][y].getIndex();
+				ret.append(String.format(" %2d ", canvas[x][y].getIndex()));
 			}
-			ret += String.format("%n");
+			ret.append(String.format("%n"));
 		}
-		return ret;
+		return ret.toString();
+	}
+	
+	public String toReadableString() {
+		StringBuilder ret = new StringBuilder();
+		for (int x = 0; x < width; x ++) {
+			for (int y = 0; y < height; y ++) {
+				ret.append(String.format(" %13s ", canvas[x][y].getName()));
+			}
+			ret.substring(0, ret.length() - 1);
+			ret.append(String.format("%n"));
+		}
+		return ret.substring(0, ret.length() - 1);
+	}
+	
+	
+	public static void main(String...strings) {
+		Canvas c = new Canvas(10);
+		c.set(0, 0, Color.BLACK);
+		System.out.println(c);
+		System.out.println(c.toReadableString());
+		
 	}
 	
 	
