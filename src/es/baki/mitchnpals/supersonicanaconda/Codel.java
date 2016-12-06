@@ -11,7 +11,7 @@ public class Codel {
 		posY = y;
 		color = c;
 	}
-	public static Codel getFurthest(int dp, int cc,ArrayList<Codel> codels){
+	public static Codel getFarthest(int dp, int cc,ArrayList<Codel> codels){
 		
 		
 		return codels.get(1);
