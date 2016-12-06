@@ -54,4 +54,9 @@ public class Canvas {
 	public void saveToFile(String filename) {
 		// TODO Save canvas to file
 	}
+	
+	public void exportToPNG(String filename) {
+		// TODO exportToPNG
+		
+	}
 }
