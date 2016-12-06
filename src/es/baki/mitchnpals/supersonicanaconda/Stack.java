@@ -145,19 +145,18 @@ public class Stack {
 	 * simply ignoring the command is recommended.
 	 */
 	public void roll() {
-		
-		// TODO Figure out/Fix roll()
-		int num = pop();
 		int depth = pop();
+		int num = pop();
 		
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		
 		for (int x = 0; x < num; x ++){
-			temp.add(stack.remove(x));
+			Integer rm = stack.remove(0);
+			temp.add(rm);
 		}
 		
-		Collections.rotate(temp, depth);
-		temp.addAll(0, temp);
+		Collections.rotate(temp, -depth);
+		stack.addAll(0, temp);
 	}
 	/**
 	 * Adds x to the stack
@@ -198,7 +197,7 @@ public class Stack {
 		stack.in(10);
 		stack.in(15);
 		System.out.println(stack);
-		stack.in(2);
+		stack.in(3);
 		stack.in(1);
 		System.out.println(stack);
 		stack.roll();

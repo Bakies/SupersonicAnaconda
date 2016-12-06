@@ -4,7 +4,7 @@ public class Canvas {
 	private int height, width; 
 	private Color[][] canvas;
 	
-	public Canvas(int height, int width, Canvas canvas) {
+	public Canvas(int width, int height, Canvas canvas) {
 		this(height, width);
 		for (int x = 0; x < canvas.width && x < this.width; x++){
 			for (int y = 0; y < canvas.height && y < this.height; y++){
@@ -17,7 +17,7 @@ public class Canvas {
 		new Canvas(length, length);
 	}
 	
-	public Canvas(int height, int width) {
+	public Canvas(int width, int height) {
 		this.height = height;
 		this.width = width;
 		canvas = new Color[width][height];
@@ -29,6 +29,8 @@ public class Canvas {
 	}
 	
 	public void set(int x, int y, Color color) {
+		if (color == null)
+			color = Color.WHITE;
 		canvas[x][y] = color;
 	}
 	
@@ -53,5 +55,10 @@ public class Canvas {
 	
 	public void saveToFile(String filename) {
 		// TODO Save canvas to file
+	}
+	
+	public void exportToPNG(String filename) {
+		// TODO exportToPNG
+		
 	}
 }
