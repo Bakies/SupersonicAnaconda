@@ -1,5 +1,7 @@
 package es.baki.mitchnpals.supersonicanaconda;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Interpreter {	
@@ -10,8 +12,10 @@ public class Interpreter {
 	private int x = 1, y = 0, deltaHue, deltaDarkness, posX = 0, posY = 0, op, wait = 0;
 	private int cc = 0, dp = 0;//dp right = 0, d= 1, l = 2, up = 3
 							   //cc 0 is left 1 is right
+	private Scanner scan;
 	
-	public Interpreter(Canvas canvas) {
+	public Interpreter(Canvas canvas, InputStream is) {
+		scan = new Scanner(is);
 		stack = new Stack();
 		this.canvas = canvas;
 	}
@@ -73,19 +77,15 @@ public class Interpreter {
 		}else if(op == 41){
 			stack.roll();
 		}else if(op == 42){
-			stack.in(5);
+			System.out.print("Input: ");
+			stack.in(scan.nextInt());
 		}else if(op == 50){
-			/*
-			 * make this stack.in(char);
-			 */
+			// TODO input char
 			stack.in(3);
 		}else if(op == 51){
-			stack.out();
+			System.out.println(stack.out());
 		}else if(op == 52){
-			/*
-			 * stack.out()return char
-			 */
-			stack.out();
+			System.out.println((char) stack.out());
 		}
 		
 		
@@ -154,7 +154,13 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
-		
+		String board = "2 3 8 1 13 16 17 3 1 11 10 0 3 14 1 11 12 12 1 0 3 11 0 0 0 0 0 0 0 2 2 1 0 0 -1 0 -1 0 0 14 0 1 0 -1 8 8 8 -1 0 14 0 3 11 10 -1 -1 -1 0 0 15 0 0 0 3 0 0 0 0 2 16 0 0 2 2 2 0 0 0 3 17 13 18 0 0 0 0 0 0 10 17 18 8 8 7 18 10 5 1 3 9";
+		Canvas c = new Canvas(10);
+		c.importFromIndexString(board);
+		c.set(2, 1, Color.RED);
+		System.out.println(c.toReadableString());
+		Interpreter i = new Interpreter(c, System.in);
+		i.run();
 	}
 
 }

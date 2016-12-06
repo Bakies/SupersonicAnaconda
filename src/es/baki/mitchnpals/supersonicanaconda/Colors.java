@@ -29,6 +29,8 @@ public class Colors {
 	private static void init() {
 		if (colors == null) {
 			colors = new ArrayList<>();
+			colors.add(Color.WHITE);
+			
 			colors.add(Color.LIGHT_RED);
 			colors.add(Color.RED);
 			colors.add(Color.DARK_RED);
@@ -58,11 +60,13 @@ public class Colors {
 	
 	/**
 	 * gets based on index
-	 * does not return white or black
 	 * @param i
 	 * @return
 	 */
 	public static Color get(int i) {
+		if (i == -1) {
+			return Color.BLACK;
+		}
 		if (colors == null)
 			init();
 		return colors.get(i);

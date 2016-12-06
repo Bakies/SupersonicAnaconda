@@ -64,10 +64,27 @@ public class Canvas {
 		
 	}
 	
+	/**
+	 * import from a string where color indexes are separated by spaces
+	 * @param s
+	 */
+	public void importFromIndexString(String s) {
+		String[] splits = s.split(" ");
+		int index = 0;
+		for (int y = 0; y < width; y ++) {
+			for (int x = 0; x < height; x ++) {
+				if (index == splits.length)
+					return;
+				canvas[x][y] = Colors.get(Integer.parseInt(splits[index]));
+				index ++;
+			}
+		}
+	}
+	
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
-		for (int x = 0; x < width; x ++) {
-			for (int y = 0; y < height; y ++) {
+		for (int y = 0; y < width; y ++) {
+			for (int x = 0; x < height; x ++) {
 				ret.append(String.format("%2d ", canvas[x][y].getIndex()));
 			}
 			ret.append(String.format("%n"));
@@ -77,8 +94,8 @@ public class Canvas {
 	
 	public String toReadableString() {
 		StringBuilder ret = new StringBuilder();
-		for (int x = 0; x < width; x ++) {
-			for (int y = 0; y < height; y ++) {
+		for (int y = 0; y < width; y ++) {
+			for (int x = 0; x < height; x ++) {
 				ret.append(String.format("%-13s ", canvas[x][y].getName()));
 			}
 			ret.substring(0, ret.length() - 1);
