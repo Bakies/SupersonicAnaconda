@@ -19,7 +19,6 @@ public class Codel {
 		return posY;
 	}
 	public static Codel getFarthest(int dp, int cc, ArrayList<Codel> codels){
-			
 		if (dp < 0 || dp > 3 || cc < 0 || cc > 1)
 			return null;
 		Codel cl = null;
@@ -91,6 +90,10 @@ public class Codel {
 	}
 	public boolean equals(Codel c) {
 		return c.posX == posX && c.posY == posY;
+	}
+
+	public Color getColor() {
+		return this.color;
 	}
 
 }

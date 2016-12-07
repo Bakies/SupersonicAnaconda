@@ -6,26 +6,7 @@ import java.util.ArrayList;
  * A helper class for Color enum
  */
 public class Colors {
-	private static ArrayList<Color> colors;
-	/**
-	 * @deprecated
-	 * @param c1
-	 * @param c2
-	 * @return
-	 */
-	public static int getHueDifference(Color c1, Color c2) {
-		return c1.getHueDifference(c2);
-	}
-	/**
-	 * @deprecated
-	 * @param c1
-	 * @param c2
-	 * @return
-	 */
-	public static int getDarknessDifference(Color c1, Color c2) {
-		return c1.getDarknessDifference(c2);
-	}
-	
+	private static ArrayList<Color> colors;	
 	private static void init() {
 		if (colors == null) {
 			colors = new ArrayList<>();

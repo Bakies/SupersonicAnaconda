@@ -9,7 +9,13 @@ import java.util.Collections;
  */
 public class Stack {
 	private ArrayList<Integer> stack = new ArrayList<Integer>();
-	
+	private boolean debug = false;
+
+	public void toggleDebug() {
+		System.out.println("Printing stack ops");
+		debug = !debug;
+	}
+
 	/**
 	 * push: Pushes the value of the colour block just exited on to the stack. Note that values of colour blocks are not automatically pushed on to the stack - this push operation must be explicitly carried out
 	 * @param x
@@ -17,7 +23,7 @@ public class Stack {
 	public void push(int x) {
 		stack.add(0, new Integer(x));
 	}
-	
+
 	/**
 	 * Pops the top value off the stack and discards it.
 	 * @return
@@ -28,14 +34,15 @@ public class Stack {
 		stack.remove(0);
 		return true;
 	}
-	
+
 	/**
 	 * Pops the top two values off the stack, calculates the integer division of the
 	 * second top value by the top value, and pushes the result back on the stack. If 
 	 * a divide by zero occurs, the two values are destroyed and nothing is put on the stack.
 	 */
 	public void divide(){
-		//System.out.println("div");
+		if (debug)
+			System.out.println("div");
 		int x, y;
 		try {
 			x = out();
@@ -48,13 +55,14 @@ public class Stack {
 		}
 		push(y / x);
 	}
-	
+
 	/** 
 	 *  Pops the top two values off the stack,
 	 *   adds them, and pushes the result back on the stack.
 	 */
 	public void add() {
-		//System.out.println("add");
+		if (debug)
+			System.out.println("add");
 		int x, y;
 		try {
 			x = out();
@@ -64,14 +72,15 @@ public class Stack {
 		}
 		push(x + y);
 	}
-	
+
 	/**
 	 *  Pops the top two values off the stack,
 	 *  calculates the second top value minus the top value, 
 	 *  and pushes the result back on the stack.
 	 */
 	public void subtract() {
-		//System.out.println("sub");
+		if (debug)
+			System.out.println("sub");
 		int x, y;
 		try {
 			x = out();
@@ -81,12 +90,13 @@ public class Stack {
 		}
 		push(y - x);
 	}
-	
+
 	/**
 	 * Pops the top two values off the stack, multiplies them, and pushes the result back on the stack.
 	 */
 	public void multiply() {
-		//System.out.println("mul");
+		if (debug)
+			System.out.println("mul");
 		int x, y;
 		try {
 			x = out();
@@ -101,7 +111,8 @@ public class Stack {
 	 * Pops the top two values off the stack, calculates the second top value modulo the top value, and pushes the result back on the stack. The result has the same sign as the divisor (the top value). If the top value is zero, this is a divide by zero error, which is handled as an implementation-dependent error, though simply ignoring the command is recommended.
 	 */
 	public void mod() {
-		//System.out.println("mod");
+		if (debug)
+			System.out.println("mod");
 		int x, y;
 		try {
 			x = out();
@@ -111,12 +122,13 @@ public class Stack {
 		}
 		push(y % x);
 	}
-	
+
 	/**
 	 * Replaces the top value of the stack with 0 if it is non-zero, and 1 if it is zero.
 	 */
 	public void not() {
-		//System.out.println("not");
+		if (debug)
+			System.out.println("not");
 		int x;
 		try {
 			x = out();
@@ -136,7 +148,8 @@ public class Stack {
 	 *   and pushes 0 if it is not greater.
 	 */
 	public void greater() {
-		//System.out.println("gr8");
+		if (debug)
+			System.out.println("grt");
 		int x, y;
 		try {
 			x = out();
@@ -156,26 +169,29 @@ public class Stack {
 	 * @throws Exception 
 	 */
 	public int pointer() throws Exception {
-		//System.out.println("pnt");
+		if (debug)
+			System.out.println("pnt");
 		return out();
-		
+
 	}
-	
+
 	/**
 	 * Same as out, for clarity in the interpreter
 	 * @return
 	 * @throws Exception 
 	 */
 	public int switch_() throws Exception {
-		//System.out.println("swt");
+		if (debug)
+			System.out.println("swt");
 		return out();
 	}
-	
+
 	/**
 	 * Pushes a copy of the top value on the stack on to the stack.
 	 */
 	public void duplicate() {
-		//System.out.println("dup");
+		if (debug)
+			System.out.println("dup");
 		int x;
 		try {
 			x = out();
@@ -185,7 +201,7 @@ public class Stack {
 		push(x);
 		push(x);
 	}
-	
+
 	/**
 	 * Pops the top two values off the stack and "rolls" the remaining stack
 	 * entries to a depth equal to the second value popped, by a number of
@@ -198,7 +214,8 @@ public class Stack {
 	 * simply ignoring the command is recommended.
 	 */
 	public void roll() {
-	//	System.out.println("rol");
+		if (debug)
+			System.out.println("rol");
 		int depth;
 		int num;
 		try {
@@ -207,14 +224,14 @@ public class Stack {
 		} catch (Exception e) {
 			return;
 		}
-		
+
 		ArrayList<Integer> temp = new ArrayList<Integer>();
-		
+
 		for (int x = 0; x < num; x ++){
 			Integer rm = stack.remove(0);
 			temp.add(rm);
 		}
-		
+
 		Collections.rotate(temp, -depth);
 		stack.addAll(0, temp);
 	}
@@ -225,7 +242,7 @@ public class Stack {
 	public void in(int x) {
 		stack.add(0, new Integer(x));
 	}
-	
+
 	/**
 	 * returns pop();
 	 * @return
@@ -233,32 +250,32 @@ public class Stack {
 	 */
 	public int out() throws Exception {
 		if (stack.size() == 0) {
-			throw new Exception();
+			throw new Exception("Stack has no values");
 		}
 		return stack.remove(0);
 	}
-	
+
 	public boolean stackHasValues() {
 		return stack.size() != 0; 
 	}
-	
+
 	public String toString() {
 		String ret = "";
-		
+
 		ArrayList<Integer> temp = new ArrayList<>(stack);
 		Collections.reverse(temp);
-		
+
 		for (int x : temp) {
 			ret += x + ", ";
 		}
-		
+
 		if (ret.equals("")) {
 			return ret;
 		} else {
 			return ret.substring(0, ret.length() - 2);
 		}
 	}
-	
+
 	public static void main(String...strings) {
 		Stack stack = new Stack();
 		stack.in(5);
@@ -270,8 +287,8 @@ public class Stack {
 		System.out.println(stack);
 		stack.roll();
 		System.out.println(stack);
-		
-		
+
+
 	}
-	
+
 }
