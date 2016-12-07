@@ -27,7 +27,8 @@ public class Interpreter {
 				//Thread.sleep(100);
 			}
 		} catch (Exception e) {
-			System.out.println("Skipped an OP " + e.getMessage());
+			//System.out.println(e.getStackTrace());
+			e.printStackTrace();
 			try {
 				Thread.sleep(3 * 1000);
 			} catch (InterruptedException e1) {
@@ -162,7 +163,7 @@ public class Interpreter {
 	}
 
 	public int checkSurrounding(int x, int y) {
-		if(checked.get(0)) != Color.WHITE)
+		if(checked.get(0).getColor() != Color.WHITE)
 			lastBlock = checked; 
 		checked = new ArrayList<Codel>();
 		return checkSurroundingHelp(x, y);
