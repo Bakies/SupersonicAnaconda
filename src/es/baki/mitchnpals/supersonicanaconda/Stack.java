@@ -250,7 +250,7 @@ public class Stack {
 	 */
 	public int out() throws Exception {
 		if (stack.size() == 0) {
-			throw new Exception();
+			throw new Exception("Stack has no values");
 		}
 		return stack.remove(0);
 	}
