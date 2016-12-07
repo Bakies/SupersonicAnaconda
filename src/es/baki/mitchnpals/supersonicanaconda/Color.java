@@ -54,7 +54,7 @@ public enum Color {
 		if (ret < 0) {
 			ret += 6;
 		}
-		ret %= 5;
+		ret %= 6;
 		return ret;
 	}		
 	public int getDarknessDifference(Color c2) {

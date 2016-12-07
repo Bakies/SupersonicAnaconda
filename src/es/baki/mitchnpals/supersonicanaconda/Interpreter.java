@@ -24,7 +24,7 @@ public class Interpreter {
 		try {
 			while(step()){
 				System.out.println(stack);
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			}
 		} catch (Exception e) {
 			System.out.println("Skipped an OP");
@@ -55,10 +55,12 @@ public class Interpreter {
 			if(wait == 8)
 				return false;
 		} else if (canvas.getColor(posX, posY) == Color.WHITE) { 
+			wait = 0;
 			op = 0;
 			posX += x;
 			posY += y;				
 		} else {
+			wait = 0;
 			deltaHue = canvas.getColor(posX,posY).getHueDifference(canvas.getColor(posX + x, posY + y));
 			deltaDarkness = canvas.getColor(posX,posY).getDarknessDifference(canvas.getColor(posX + x, posY + y));		
 			op = deltaDarkness + deltaHue *10;
@@ -98,9 +100,9 @@ public class Interpreter {
 			// TODO input char
 			stack.in(3);
 		}else if(op == 51){
-			System.out.println(stack.out());
+			System.out.println("OUTPUT: " + stack.out());
 		}else if(op == 52){
-			System.out.println((char) stack.out());
+			System.out.println("OUTPUT: " + (char) stack.out());
 		}
 
 
@@ -174,7 +176,8 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
-		System.out.println(Color.LIGHT_CYAN.getDarknessDifference(Color.DARK_MAGENTA));
+		System.out.println(Color.DARK_MAGENTA.getDarknessDifference(Color.LIGHT_BLUE));
+		System.out.println(Color.DARK_MAGENTA.getHueDifference(Color.LIGHT_BLUE));
 		System.out.println(0 % 4);
 		String board = "2 3 8 1 13 16 17 3 1 11 10 0 3 14 1 11 12 12 1 0 3 11 0 0 0 0 0 0 0 2 2 1 0 0 -1 0 -1 0 0 14 0 1 0 -1 8 8 8 -1 0 14 0 3 11 10 -1 -1 -1 0 0 15 0 0 0 3 0 0 0 0 2 16 0 0 2 2 2 0 0 0 3 17 13 18 0 0 0 0 0 0 10 17 18 8 8 7 18 10 5 1 3 9";
 		Canvas c = new Canvas(10);
