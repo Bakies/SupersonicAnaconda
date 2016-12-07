@@ -35,7 +35,7 @@ public class Stack {
 	 * a divide by zero occurs, the two values are destroyed and nothing is put on the stack.
 	 */
 	public void divide(){
-		System.out.println("div");
+		//System.out.println("div");
 		int x, y;
 		try {
 			x = out();
@@ -54,7 +54,7 @@ public class Stack {
 	 *   adds them, and pushes the result back on the stack.
 	 */
 	public void add() {
-		System.out.println("add");
+		//System.out.println("add");
 		int x, y;
 		try {
 			x = out();
@@ -71,7 +71,7 @@ public class Stack {
 	 *  and pushes the result back on the stack.
 	 */
 	public void subtract() {
-		System.out.println("sub");
+		//System.out.println("sub");
 		int x, y;
 		try {
 			x = out();
@@ -86,7 +86,7 @@ public class Stack {
 	 * Pops the top two values off the stack, multiplies them, and pushes the result back on the stack.
 	 */
 	public void multiply() {
-		System.out.println("mul");
+		//System.out.println("mul");
 		int x, y;
 		try {
 			x = out();
@@ -101,7 +101,7 @@ public class Stack {
 	 * Pops the top two values off the stack, calculates the second top value modulo the top value, and pushes the result back on the stack. The result has the same sign as the divisor (the top value). If the top value is zero, this is a divide by zero error, which is handled as an implementation-dependent error, though simply ignoring the command is recommended.
 	 */
 	public void mod() {
-		System.out.println("mod");
+		//System.out.println("mod");
 		int x, y;
 		try {
 			x = out();
@@ -116,7 +116,7 @@ public class Stack {
 	 * Replaces the top value of the stack with 0 if it is non-zero, and 1 if it is zero.
 	 */
 	public void not() {
-		System.out.println("not");
+		//System.out.println("not");
 		int x;
 		try {
 			x = out();
@@ -136,7 +136,7 @@ public class Stack {
 	 *   and pushes 0 if it is not greater.
 	 */
 	public void greater() {
-		System.out.println("gr8");
+		//System.out.println("gr8");
 		int x, y;
 		try {
 			x = out();
@@ -156,7 +156,7 @@ public class Stack {
 	 * @throws Exception 
 	 */
 	public int pointer() throws Exception {
-		System.out.println("pnt");
+		//System.out.println("pnt");
 		return out();
 		
 	}
@@ -167,7 +167,7 @@ public class Stack {
 	 * @throws Exception 
 	 */
 	public int switch_() throws Exception {
-		System.out.println("swt");
+		//System.out.println("swt");
 		return out();
 	}
 	
@@ -175,7 +175,7 @@ public class Stack {
 	 * Pushes a copy of the top value on the stack on to the stack.
 	 */
 	public void duplicate() {
-		System.out.println("dup");
+		//System.out.println("dup");
 		int x;
 		try {
 			x = out();
@@ -198,7 +198,7 @@ public class Stack {
 	 * simply ignoring the command is recommended.
 	 */
 	public void roll() {
-		System.out.println("rol");
+	//	System.out.println("rol");
 		int depth;
 		int num;
 		try {

@@ -23,8 +23,8 @@ public class Interpreter {
 	public void run() {
 		try {
 			while(step()){
-				System.out.println(stack);
-				Thread.sleep(100);
+				//System.out.println(stack);
+				//Thread.sleep(100);
 			}
 		} catch (Exception e) {
 			System.out.println("Skipped an OP");
@@ -48,7 +48,7 @@ public class Interpreter {
 		if(canvas.getColor(posX + x, posY + y) == null || canvas.getColor(posX + x, posY + y) == Color.BLACK){
 			op = 0;
 			wait++;
-			System.out.println("wait");
+			//System.out.println("wait");
 			changeCC(1);
 			if(wait%2 == 0)
 				changeDirection(1);
