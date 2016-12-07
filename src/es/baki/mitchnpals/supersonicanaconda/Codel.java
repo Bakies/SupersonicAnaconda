@@ -43,45 +43,53 @@ public class Codel {
 		}
 		if (dp == 0) {
 			for (Codel c : codels) {
-				if(c.posX == maxX)
+				if(c.posX == maxX){
 					if (c.posY == maxY) {
 						cr = c;
-					} else if (c.posY == minY){
+					}
+					if (c.posY == minY){
 						cl = c;
 					}
+				}
 			}
 		} else if (dp == 1) {
 			for (Codel c : codels) 
-				if (c.posY == maxY) 
+				if (c.posY == maxY) {
 					if (c.posX == maxX) {
 						cl = c;
-					} else if (c.posX == minX) {
+					}
+					if (c.posX == minX) {
 						cr = c;
 					}
+				}
 
 		} else if (dp == 2) {
 			for (Codel c : codels)
-				if(c.posX == minX)
+				if(c.posX == minX) {
 					if (c.posY == maxY) {
 						cl = c;
-					} else if (c.posY == minY){
+					}
+					if (c.posY == minY){
 						cr = c;
 					}
+				}
 		} else if (dp == 3) {
 			for (Codel c : codels) 
-				if (c.posY == minY) 
+				if (c.posY == minY)  {
 					if (c.posX == maxX) {
 						cr = c;
-					} else if (c.posX == minX) {
+					} 
+					if (c.posX == minX) {
 						cl = c;
 					}
+				}
 		} else { 
 			return null;
 		}
 
 		return cc == 0 ? cl : cr;
 	}
-	
+
 	public boolean inList(ArrayList<Codel> list) {
 		for (Codel c : list)
 			if (c.equals(this))
