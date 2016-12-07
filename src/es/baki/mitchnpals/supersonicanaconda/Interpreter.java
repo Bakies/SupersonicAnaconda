@@ -27,7 +27,8 @@ public class Interpreter {
 				//Thread.sleep(100);
 			}
 		} catch (Exception e) {
-			System.out.println("Skipped an OP");
+			//System.out.println(e.getStackTrace());
+			e.printStackTrace();
 			try {
 				Thread.sleep(3 * 1000);
 			} catch (InterruptedException e1) {
@@ -48,12 +49,13 @@ public class Interpreter {
 		if(canvas.getColor(posX + x, posY + y) == null || canvas.getColor(posX + x, posY + y) == Color.BLACK){
 			op = 0;
 			wait++;
-			//System.out.println("wait");
 			changeCC(1);
 			if(wait%2 == 0)
 				changeDirection(1);
 			if(wait == 8)
 				return false;
+			System.out.println("wait");
+			System.out.println(posX + ", " + posY + ", " + dp + ", " + cc);
 			if (canvas.getColor(posX, posY) == Color.WHITE) {
 				posX = Codel.getFarthest(dp, cc, lastBlock).getX();
 				posY = Codel.getFarthest(dp, cc, lastBlock).getY();
@@ -161,7 +163,8 @@ public class Interpreter {
 	}
 
 	public int checkSurrounding(int x, int y) {
-		lastBlock = checked; 
+		if(checked.get(0).getColor() != Color.WHITE)
+			lastBlock = checked; 
 		checked = new ArrayList<Codel>();
 		return checkSurroundingHelp(x, y);
 	}
