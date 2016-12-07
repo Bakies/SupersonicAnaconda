@@ -23,7 +23,7 @@ public class Interpreter {
 	public void run() {
 		try {
 			while(step()){
-				System.out.println(stack);
+				//System.out.println(stack);
 				//Thread.sleep(100);
 			}
 		} catch (Exception e) {
@@ -54,8 +54,8 @@ public class Interpreter {
 				changeDirection(1);
 			if(wait == 8)
 				return false;
-			System.out.println("wait");
-			System.out.println(posX + ", " + posY + ", " + dp + ", " + cc);
+			//System.out.println("wait");
+			//System.out.println(posX + ", " + posY + ", " + dp + ", " + cc);
 			if (lastBlock != null && canvas.getColor(posX, posY) == Color.WHITE) {
 				posX = Codel.getFarthest(dp, cc, lastBlock).getX();
 				posY = Codel.getFarthest(dp, cc, lastBlock).getY();
@@ -185,7 +185,7 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
-		Interpreter i = new Interpreter(Canvas.readFromPNGFile("odds.png"), System.in);
+		Interpreter i = new Interpreter(Canvas.readFromPNGFile("gcd.png"), System.in);
 		System.out.println(i.canvas.toReadableString());
 		i.run();
 	}
