@@ -38,7 +38,7 @@ public class Codel {
 			maxX = Math.max(c.posX, maxX);
 			maxY = Math.max(c.posY, maxY);
 
-			minX = Math.min(c.posY, minX);
+			minX = Math.min(c.posX, minX);
 			minY = Math.min(c.posY, minY);
 		}
 		if (dp == 0) {
