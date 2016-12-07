@@ -27,7 +27,7 @@ public enum Color {
 
 	LIGHT_MAGENTA ("Light Magenta", 16,5, 0),
 	MAGENTA ("Magenta", 17,5, 1),
-	DARK_MAGENTA ("Dark Magenta", 18,5, 1);
+	DARK_MAGENTA ("Dark Magenta", 18,5, 2);
 	
 	private final String name; 
 	private final int index, hue, darkness;
@@ -48,7 +48,7 @@ public enum Color {
 	
 	public int getHueDifference(Color c2) {
 		if (index == -1 || index == 0 || c2.index == 0 || c2.index == -1) { 
-			return -1;
+			return 0;
 		}
 		int ret = c2.getHue() - hue;
 		if (ret < 0) {
@@ -59,11 +59,11 @@ public enum Color {
 	}		
 	public int getDarknessDifference(Color c2) {
 		if (index == -1 || index == 0 || c2.index == 0 || c2.index == -1) { 
-			return -1;
+			return 0;
 		}
 		int ret = c2.getDarkness() - darkness;
 		if (ret < 0) {
-			ret += 4;
+			ret += 3;
 		}
 		ret %= 3;
 		return ret;
