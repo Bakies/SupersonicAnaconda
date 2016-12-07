@@ -33,8 +33,7 @@ public class Interpreter {
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
-			run();posX += x;
-			posY += y;
+			run();
 		}
 	}
 
@@ -49,8 +48,8 @@ public class Interpreter {
 		if(canvas.getColor(posX + x, posY + y) == null || canvas.getColor(posX + x, posY + y) == Color.BLACK){
 			op = 0;
 			wait++;
-			if(wait % 2 == 1)
-				changeCC(1);
+			System.out.println("wait");
+			changeCC(1);
 			if(wait%2 == 0)
 				changeDirection(1);
 			if(wait == 8)
