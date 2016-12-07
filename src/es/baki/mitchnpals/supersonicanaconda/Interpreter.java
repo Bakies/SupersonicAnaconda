@@ -163,7 +163,7 @@ public class Interpreter {
 	}
 
 	public int checkSurrounding(int x, int y) {
-		if(checked.get(0).getColor() != Color.WHITE)
+		if(checked != null && checked.get(0).getColor() != Color.WHITE)
 			lastBlock = checked; 
 		checked = new ArrayList<Codel>();
 		return checkSurroundingHelp(x, y);
