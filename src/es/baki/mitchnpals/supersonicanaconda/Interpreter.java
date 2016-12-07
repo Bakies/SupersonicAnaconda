@@ -13,6 +13,7 @@ public class Interpreter {
 	private int cc = 0, dp = 0;//dp right = 0, d= 1, l = 2, up = 3
 	//cc 0 is left 1 is right
 	private Scanner scan;
+	private boolean debug = false;
 
 	public Interpreter(Canvas canvas, InputStream is) {
 		scan = new Scanner(is);
@@ -20,12 +21,15 @@ public class Interpreter {
 		this.canvas = canvas;
 	}
 
+	public void toggleDebug() {
+		System.out.println("Debugging interp");
+		stack.toggleDebug();
+		debug = !debug;
+	}
+	
 	public void run() {
 		try {
-			while(step()){
-				//System.out.println(stack);
-				//Thread.sleep(100);
-			}
+			while(step());
 		} catch (Exception e) {
 			//System.out.println(e.getStackTrace());
 			e.printStackTrace();
@@ -39,6 +43,8 @@ public class Interpreter {
 	}
 
 	public boolean step() throws Exception {
+		if (debug)
+			System.out.println(stack);
 		checkSurrounding(posX, posY);
 		codel = Codel.getFarthest(dp, cc, checked);
 		if (codel != null) {
@@ -185,9 +191,16 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
-		Interpreter i = new Interpreter(Canvas.readFromPNGFile("gcd.png"), System.in);
-		System.out.println(i.canvas.toReadableString());
-		i.run();
+		Interpreter i = new Interpreter(Canvas.readFromPNGFile("fib.png"), System.in);
+		i.toggleDebug();
+		while (true) {
+			try {
+				i.step();
+				Thread.sleep(100);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
