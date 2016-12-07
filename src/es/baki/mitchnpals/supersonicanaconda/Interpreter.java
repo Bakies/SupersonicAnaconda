@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 
 public class Interpreter {	
-	private ArrayList<Codel> checked;
+	private ArrayList<Codel> checked, lastBlock;
 	private Codel codel;
 	private Stack stack;
 	private Canvas canvas;
@@ -23,7 +23,7 @@ public class Interpreter {
 	public void run() {
 		try {
 			while(step()){
-				//System.out.println(stack);
+				System.out.println(stack);
 				//Thread.sleep(100);
 			}
 		} catch (Exception e) {
@@ -54,6 +54,11 @@ public class Interpreter {
 				changeDirection(1);
 			if(wait == 8)
 				return false;
+			if (canvas.getColor(posX, posY) == Color.WHITE) {
+				posX = Codel.getFarthest(dp, cc, lastBlock).getX();
+				posY = Codel.getFarthest(dp, cc, lastBlock).getY();
+			}
+				
 		} else if (canvas.getColor(posX, posY) == Color.WHITE) { 
 			wait = 0;
 			op = 0;
@@ -156,6 +161,7 @@ public class Interpreter {
 	}
 
 	public int checkSurrounding(int x, int y) {
+		lastBlock = checked; 
 		checked = new ArrayList<Codel>();
 		return checkSurroundingHelp(x, y);
 	}
@@ -176,7 +182,7 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
-		Interpreter i = new Interpreter(Canvas.readFromPNGFile("modds.png"), System.in);
+		Interpreter i = new Interpreter(Canvas.readFromPNGFile("odds.png"), System.in);
 		System.out.println(i.canvas.toReadableString());
 		i.run();
 	}
