@@ -56,7 +56,7 @@ public class Interpreter {
 				return false;
 			System.out.println("wait");
 			System.out.println(posX + ", " + posY + ", " + dp + ", " + cc);
-			if (canvas.getColor(posX, posY) == Color.WHITE) {
+			if (lastBlock != null && canvas.getColor(posX, posY) == Color.WHITE) {
 				posX = Codel.getFarthest(dp, cc, lastBlock).getX();
 				posY = Codel.getFarthest(dp, cc, lastBlock).getY();
 			}
