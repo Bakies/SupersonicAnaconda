@@ -176,19 +176,8 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
-		System.out.println(Color.DARK_MAGENTA.getDarknessDifference(Color.LIGHT_BLUE));
-		System.out.println(Color.DARK_MAGENTA.getHueDifference(Color.LIGHT_BLUE));
-		System.out.println(0 % 4);
-		String board = "2 3 8 1 13 16 17 3 1 11 10 0 3 14 1 11 12 12 1 0 3 11 0 0 0 0 0 0 0 2 2 1 0 0 -1 0 -1 0 0 14 0 1 0 -1 8 8 8 -1 0 14 0 3 11 10 -1 -1 -1 0 0 15 0 0 0 3 0 0 0 0 2 16 0 0 2 2 2 0 0 0 3 17 13 18 0 0 0 0 0 0 10 17 18 8 8 7 18 10 5 1 3 9";
-		Canvas c = new Canvas(10);
-		c.importFromIndexString(board);
-		c.set(2, 1, Color.RED);
-		c.set(2, 8, Color.WHITE);
-		c.set(5, 8, Color.RED);
-		System.out.println(c.exportToIndexString());
-
-		System.out.println(c.toReadableString());
-		Interpreter i = new Interpreter(c, System.in);
+		Interpreter i = new Interpreter(Canvas.readFromPNGFile("modds.png"), System.in);
+		System.out.println(i.canvas.toReadableString());
 		i.run();
 	}
 
