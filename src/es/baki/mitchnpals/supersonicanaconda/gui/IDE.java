@@ -1,7 +1,5 @@
 package es.baki.mitchnpals.supersonicanaconda.gui;
 
-import es.baki.mitchnpals.supersonicanaconda.Interpreter;
-
 public class IDE {
 	private Frame frame; 
 	
