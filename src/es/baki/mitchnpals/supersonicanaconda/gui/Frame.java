@@ -56,7 +56,8 @@ public class Frame extends JFrame {
 	public Frame() {
 		super("Supersonic Anaconda");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new GridBagLayout());
+		layoutManager = new GridBagLayout();
+		this.setLayout(layoutManager);
 		GridBagConstraints c = new GridBagConstraints();
 		
 		makeIOPanel();
@@ -79,7 +80,8 @@ public class Frame extends JFrame {
 		c.gridy = 1;
 		this.add(toolPickerPanel, c);
 		
-		canvasPanel = new JPanel();
+		canvasPanel = new CanvasPanel(100, 100);
+		c.fill = GridBagConstraints.NONE;
 		c.gridx = 2;
 		c.gridy = 0;
 		c.gridheight = 2;
@@ -124,7 +126,7 @@ public class Frame extends JFrame {
 		colorsPickerPanel.setLayout(new BoxLayout(colorsPickerPanel, BoxLayout.Y_AXIS));
 
 		colorPickerTitle = new JLabel("Colors");
-		colorsPickerPanel.add(colorPickerTitle);
+		colorsPickerPanel.add(new JPanel().add(colorPickerTitle));
 
 		selectedColorPanel = new JPanel();
 		selectedColorPanel.setBackground(Color.red);
@@ -218,7 +220,9 @@ public class Frame extends JFrame {
 	
 	private void makeIOPanel() {
 		ioPanel = new JPanel();
-		ioPanel.setLayout(new BoxLayout(ioPanel, BoxLayout.Y_AXIS));
+		ioPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
 		
 		ioTitle = new JLabel("Input/Output");	
 		ioPanel.add(ioTitle);
