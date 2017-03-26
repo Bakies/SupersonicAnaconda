@@ -60,9 +60,9 @@ public class Frame extends JFrame {
 	private IDE ide;
 	
 	public Frame(IDE ide, int height, int width) {
+		super("Supersonic Anaconda");
 		this.ide = ide;
 		
-		super("Supersonic Anaconda");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		layoutManager = new GridBagLayout();
 		this.setLayout(layoutManager);
