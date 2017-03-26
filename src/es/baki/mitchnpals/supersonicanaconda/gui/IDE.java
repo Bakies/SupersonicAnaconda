@@ -4,7 +4,7 @@ import es.baki.mitchnpals.supersonicanaconda.*;
 
 public class IDE {
 	private Frame frame; 
-	private Interpreter i;
+	public Interpreter i;
 	public boolean run = true;
 	private boolean running = false;
 	
@@ -20,6 +20,7 @@ public class IDE {
 	
 	public static void main(String[] args) {
 		IDE ide = new IDE(10, 10);
+		ide.i.toggleDebug();
 	}
 	public void stepInterpreter() {
 		try {

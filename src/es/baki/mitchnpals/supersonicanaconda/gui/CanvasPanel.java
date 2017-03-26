@@ -17,17 +17,21 @@ public class CanvasPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel[][] panels;
-	public CanvasPanel(){
+	private Frame f;
+	public CanvasPanel(Frame f){
 		super(new GridLayout(10,10));
 		placePanels(10,10);
+		this.f = f;
 	}
-	public CanvasPanel(int width, int height){
+	public CanvasPanel(int width, int height, Frame f){
 		super(new GridLayout(width, height));
 		placePanels(width, height);
+		this.f = f;
 	}
-	public CanvasPanel(GridLayout gl){
+	public CanvasPanel(GridLayout gl, Frame f){
 		super(gl);
 		placePanels(gl.getColumns(), gl.getRows());
+		this.f = f;
 	}
 
 	public void placePanels(int width, int height){
@@ -71,6 +75,7 @@ public class CanvasPanel extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			this.setBackground(f.getSelectedColor());
 		}
 
 		@Override

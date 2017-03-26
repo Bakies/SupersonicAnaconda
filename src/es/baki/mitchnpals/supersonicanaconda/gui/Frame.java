@@ -95,7 +95,7 @@ public class Frame extends JFrame {
 		c.gridy = 1;
 		this.add(toolPickerPanel, c);
 		
-		canvasPanel = new CanvasPanel(height, width);
+		canvasPanel = new CanvasPanel(height, width, this);
 		c.fill = GridBagConstraints.NONE;
 		c.gridx = 2;
 		c.gridy = 0;
