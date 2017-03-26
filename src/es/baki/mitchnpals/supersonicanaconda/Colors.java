@@ -1,6 +1,6 @@
 package es.baki.mitchnpals.supersonicanaconda;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 
 /**
  * A helper class for Color enum
@@ -68,6 +68,9 @@ public class Colors {
 					return c;
 			}
 			return null;
+	}
+	public Color get(java.awt.Color color){
+		return null;
 	}
 	
 }

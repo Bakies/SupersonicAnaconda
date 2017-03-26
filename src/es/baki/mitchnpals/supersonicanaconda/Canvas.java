@@ -34,11 +34,14 @@ public class Canvas {
 			}
 		}
 	}
+	public void set(int x, int y, Color c){
+		canvas[x][y] = c;
+	}
 
-	public void set(int x, int y, java.awt.Color color) {
+	public void set(int x, int y, Enum<Color> color) {
 		if (color == null)
 			color = Color.WHITE;
-		canvas[x][y] = color;
+		canvas[x][y] = (Color) color;
 	}
 
 	public int getHeight() {
