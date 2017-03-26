@@ -5,6 +5,8 @@ import es.baki.mitchnpals.supersonicanaconda.*;
 public class IDE {
 	private Frame frame; 
 	private Interpreter i;
+	public boolean run = true;
+	private boolean running = false;
 	
 	public IDE(int height, int width ) {
 		frame = new Frame(this, height, width);
@@ -21,19 +23,48 @@ public class IDE {
 	}
 	public void stepInterpreter() {
 		try {
-			i.step();
+			//i.step();
+			System.out.println("Step");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	public void stopInterpreter() {
-		// TODO Auto-generated method stub
+		run = false;
+		running = false;
+		System.out.println("Stop");
 		
 	}
 	public void runInterpreter() {
-		// TODO Auto-generated method stub
-		
+		run = true;
+		if(!running){
+			RunnableIDE r = new RunnableIDE(this);
+			r.start();		
+		}
 	}
 
+}
+
+class RunnableIDE implements Runnable{
+	private Thread t;
+	IDE ide;
+	RunnableIDE(IDE ide){
+		this.ide = ide;
+	}
+	public void start() {
+		t = new Thread(this);
+		t.start();
+	}
+	@Override
+	public void run() {
+		try{
+			while(ide.run)	
+				System.out.println("run");
+			
+		}catch (Exception e){
+			// TODO idk man its up to you
+		}
+		
+	}
+	
 }
