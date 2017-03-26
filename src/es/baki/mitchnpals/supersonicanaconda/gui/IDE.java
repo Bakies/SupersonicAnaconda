@@ -1,6 +1,6 @@
 package es.baki.mitchnpals.supersonicanaconda.gui;
 
-import es.baki.mitchnpals.supersonicanaconda.Interpreter;
+import es.baki.mitchnpals.supersonicanaconda.*;
 
 public class IDE {
 	private Frame frame; 
@@ -9,7 +9,7 @@ public class IDE {
 	public IDE(int height, int width ) {
 		frame = new Frame(this, height, width);
 		Canvas canvas = frame.getCanvas();
-		i = new Interpreter(frame, System.in);
+		i = new Interpreter(canvas, System.in);
 		
 	}
 	public IDE() {
@@ -20,8 +20,12 @@ public class IDE {
 		IDE ide = new IDE(10, 10);
 	}
 	public void stepInterpreter() {
-		
-		
+		try {
+			i.step();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void stopInterpreter() {
 		// TODO Auto-generated method stub

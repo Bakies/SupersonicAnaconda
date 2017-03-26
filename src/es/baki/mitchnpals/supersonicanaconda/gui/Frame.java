@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import es.baki.mitchnpals.supersonicanaconda.Interpreter;
+import es.baki.mitchnpals.supersonicanaconda.Canvas;
 
 public class Frame extends JFrame {
 	private static final long serialVersionUID = 1L;
