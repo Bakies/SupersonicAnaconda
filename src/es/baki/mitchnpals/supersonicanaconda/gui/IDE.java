@@ -28,8 +28,7 @@ public class IDE {
 				i = new Interpreter(canvas, System.in);
 				firstRun = false;
 			}
-			System.out.println("Step");
-			i.canvas.exportToPNG("test.png");
+			//System.out.println("Step");
 			i.step();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -39,7 +38,7 @@ public class IDE {
 		run = false;
 		running = false;
 		firstRun = true;
-		System.out.println("Stop");
+		//System.out.println("Stop");
 		
 	}
 	public void runInterpreter() {
@@ -75,8 +74,8 @@ class RunnableIDE implements Runnable{
 	@Override
 	public void run() {
 		try{
-			while(ide.run && i.step())	
-				System.out.println("run");
+			while(ide.run && i.step());
+				//System.out.println("run");
 			
 		}catch (Exception e){
 			// TODO idk man its up to you
