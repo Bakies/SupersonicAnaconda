@@ -175,7 +175,7 @@ public class Canvas {
 	}
 
 	public java.awt.Color getAwtColor(int x, int y) {
-		new java.awt.Color(Color.getRGB(getColor(x, y));
+		new java.awt.Color(Color.getRGB(getColor(x, y)));
 		return null;
 	}
 }
