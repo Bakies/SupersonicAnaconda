@@ -7,7 +7,7 @@ public class IDE {
 		frame = new Frame(height, width);
 	}
 	public IDE() {
-		frame - new Frame(10, 10) 
+		frame = new Frame(10, 10);
 	}
 
 	public static void main(String[] args) {
