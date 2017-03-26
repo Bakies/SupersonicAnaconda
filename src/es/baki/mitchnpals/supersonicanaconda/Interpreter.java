@@ -183,7 +183,7 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
-		Interpreter i = new Interpreter(Canvas.readFromPNGFile("fizzbuzz.png"), System.in);
+		Interpreter i = new Interpreter(Canvas.readFromFile("fizzbuzz.png"), System.in);
 		i.run();
 		/*i.toggleDebug();
 		while (true) {

@@ -57,7 +57,7 @@ public class Canvas {
 		// TODO Read from piet file 
 	}
 
-	public static Canvas readFromPNGFile(String filename) {
+	public static Canvas readFromFile(String filename) {
 		File file = new File(filename);
 		BufferedImage image ;
 		if (!file.exists()){
