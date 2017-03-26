@@ -7,11 +7,10 @@ public class IDE {
 	public Interpreter i;
 	public boolean run = true;
 	private boolean running = false;
+	private boolean firstRun = true;
 	
 	public IDE(int height, int width ) {
 		frame = new Frame(this, height, width);
-		Canvas canvas = frame.getCanvas();
-		i = new Interpreter(canvas, System.in);
 		
 	}
 	public IDE() {
@@ -20,12 +19,18 @@ public class IDE {
 	
 	public static void main(String[] args) {
 		IDE ide = new IDE(10, 10);
-		ide.i.toggleDebug();
 	}
 	public void stepInterpreter() {
 		try {
 			//i.step();
+			if(firstRun){
+				Canvas canvas = frame.getCanvas();
+				i = new Interpreter(canvas, System.in);
+				firstRun = false;
+			}
 			System.out.println("Step");
+			i.canvas.exportToPNG("test.png");
+			i.step();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 		}
@@ -33,13 +38,19 @@ public class IDE {
 	public void stopInterpreter() {
 		run = false;
 		running = false;
+		firstRun = true;
 		System.out.println("Stop");
 		
 	}
 	public void runInterpreter() {
 		run = true;
+		if(firstRun){
+			Canvas canvas = frame.getCanvas();
+			i = new Interpreter(canvas, System.in);
+			firstRun = false;
+		}
 		if(!running){
-			RunnableIDE r = new RunnableIDE(this);
+			RunnableIDE r = new RunnableIDE(this, i);
 			r.start();		
 		}
 	}
@@ -52,8 +63,10 @@ public class IDE {
 class RunnableIDE implements Runnable{
 	private Thread t;
 	IDE ide;
-	RunnableIDE(IDE ide){
+	Interpreter i;
+	RunnableIDE(IDE ide, Interpreter i){
 		this.ide = ide;
+		this.i = i;
 	}
 	public void start() {
 		t = new Thread(this);
@@ -62,12 +75,13 @@ class RunnableIDE implements Runnable{
 	@Override
 	public void run() {
 		try{
-			while(ide.run)	
+			while(ide.run && i.step())	
 				System.out.println("run");
 			
 		}catch (Exception e){
 			// TODO idk man its up to you
 		}
+		
 		
 	}
 	

@@ -8,12 +8,12 @@ public class Interpreter {
 	private ArrayList<Codel> checked, lastBlock;
 	private Codel codel;
 	private Stack stack;
-	private Canvas canvas;
+	public Canvas canvas;
 	private int x = 1, y = 0, deltaHue, deltaDarkness, posX = 0, posY = 0, op, wait = 0;
 	private int cc = 0, dp = 0;//dp right = 0, d= 1, l = 2, up = 3
 	//cc 0 is left 1 is right
 	private Scanner scan;
-	private boolean debug = false;
+	private boolean debug = true;
 
 	public Interpreter(Canvas canvas, InputStream is) {
 		scan = new Scanner(is);
