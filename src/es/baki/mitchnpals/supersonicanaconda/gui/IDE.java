@@ -11,7 +11,7 @@ public class IDE {
 	private boolean firstRun = true;
 	
 	public IDE(int height, int width ) {
-		frame = new Frame(this, height, width);
+		frame = new Frame(this);
 		
 	}
 	public IDE() {

@@ -8,7 +8,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import java.awt.Color;
-import java.awt.Dimension;
 
 public class CanvasPanel extends JPanel {
 	
@@ -18,18 +17,23 @@ public class CanvasPanel extends JPanel {
 	private int mouseDownXCoord = 0, mouseDownYCoord = 0; 
 	private int mouseXCoord = 0, mouseYCoord = 0;
 	
+	private int height, width;
+	
 	private CodelPanel[][] panels;
 	private Frame f;
 	
-	@Override
-	public void setSize(Dimension d) {
-		this.setSize(d.width, d.height);
+	public void setCodelGridSize(int x, int y) {
+		placePanels(x, y);
+		this.height = x; 
+		this.width = y;
 	}
 	
-	@Override
-	public void setSize(int x, int y) {
-		super.setSize(x, y);
-		placePanels(x, y);
+	public int getCodelGridHeight() {
+		return height;
+	}
+	
+	public int getCodelGridWidth() {
+		return width;
 	}
 	
 	public CanvasPanel(Frame f){

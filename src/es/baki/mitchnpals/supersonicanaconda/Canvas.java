@@ -94,8 +94,8 @@ public class Canvas {
 		// TODO Save canvas to file
 	}
 
-	public void exportToPNG(String filename) {
-		File file = new File(filename);
+	
+	public void exportToPNG(File file) {
 		if (!file.exists()) {
 			System.out.println("Making new file");
 			try {
@@ -116,6 +116,10 @@ public class Canvas {
 		} catch (IOException e) {
 			System.err.println("Failed to write image: " + e.getMessage());
 		}
+	}
+	public void exportToPNG(String filename) {
+		File file = new File(filename);
+		exportToPNG(file);
 	}
 
 	/**

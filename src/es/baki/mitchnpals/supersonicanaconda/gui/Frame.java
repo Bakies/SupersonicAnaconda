@@ -1,6 +1,7 @@
 package es.baki.mitchnpals.supersonicanaconda.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -66,16 +67,12 @@ public class Frame extends JFrame {
 
 	private IDE ide;
 	
-	private int width, height;
-	
 	public Color getSelectedColor() { 
 		return selectedColorPanel.getBackground();
 	}
 	
-	public Frame(IDE ide, int height, int width) {
+	public Frame(IDE ide) {
 		super("Supersonic Anaconda");
-		this.width = width; 
-		this.height = height;
 		this.ide = ide;
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,7 +100,7 @@ public class Frame extends JFrame {
 		c.gridy = 1;
 		this.add(toolPickerPanel, c);
 		
-		canvasPanel = new CanvasPanel(height, width, this);
+		canvasPanel = new CanvasPanel(10, 10, this);
 		canvasPanel.setAutoscrolls(true);
 		c.fill = GridBagConstraints.NONE;
 		c.gridx = 2;
@@ -117,10 +114,12 @@ public class Frame extends JFrame {
 		
 		this.pack();
 		this.setVisible(true);
+		this.setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+		
 	}
 	
 	private void makeNewCanvas(Canvas canvas) {
-		canvasPanel.setSize(canvas.getWidth(), canvas.getHeight());
+		canvasPanel.setCodelGridSize(canvas.getWidth(), canvas.getHeight());
 		this.pack();
 		for (int x = 0; x < canvas.getWidth(); x ++) {
 			for (int y = 0; y < canvas.getHeight(); y++) {
@@ -265,7 +264,7 @@ public class Frame extends JFrame {
 		
 		newCanvas = new FileNewButton("New");
 		open = new FileOpenButton(this, "Open");
-		save = new FileSaveButton("Save");
+		save = new FileSaveButton(this, "Save");
 		
 		fileMenu.add(newCanvas);
 		fileMenu.add(open);
@@ -295,14 +294,21 @@ public class Frame extends JFrame {
 
 	private class FileSaveButton extends MenuItem implements ActionListener {
 		private static final long serialVersionUID = 7904843145726959811L;
-		public FileSaveButton(String title) {
+		private Frame parent;
+		public FileSaveButton(Frame parent, String title) {
 			super(title);
+			this.parent = parent;
 			this.addActionListener(this);
 		} 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Save file - Action performed stub
-		} 
+			final JFileChooser fc = new JFileChooser();
+			fc.showDialog(parent, "Save");
+			
+			File file = fc.getSelectedFile();
+			System.out.println(getCanvas());
+			getCanvas().exportToPNG(file);
+		} 	
 		
 	}
 	private class FileNewButton extends MenuItem implements ActionListener {
@@ -313,7 +319,7 @@ public class Frame extends JFrame {
 		} 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			makeNewCanvas(new Canvas(10));
+			makeNewCanvas(new Canvas(1, 10));
 		} 
 		
 	}
@@ -414,9 +420,9 @@ public class Frame extends JFrame {
 	}
 	
 	public Canvas getCanvas() {
-		Canvas canvas = new Canvas(width, height);
-		for (int x = 0; x < width; x ++) {
-			for (int y = 0; y < height; y ++){
+		Canvas canvas = new Canvas(canvasPanel.getWidth(), canvasPanel.getHeight());
+		for (int x = 0; x < canvasPanel.getWidth(); x ++) {
+			for (int y = 0; y < canvasPanel.getHeight(); y ++){
 				// backwards because we are converting out of gui, origins top left instead of bottom right
 				canvas.set(y, x, es.baki.mitchnpals.supersonicanaconda.Color.awtToBakiesColor(canvasPanel.getColorAt(x, y)));
 			}
