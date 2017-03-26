@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import es.baki.mitchnpals.supersonicanaconda.Color;
+import java.awt.Color;
 
 public class CanvasPanel extends JPanel {
 	
@@ -39,7 +39,7 @@ public class CanvasPanel extends JPanel {
 			}
 		}
 	}
-	public void changePanelColor(int posX, int posY, java.awt.Color c){
+	public void changePanelColor(int posX, int posY, Color c){
 		panels[posX][posY].setBackground(c);
 	}
 	
@@ -55,7 +55,7 @@ public class CanvasPanel extends JPanel {
 			super();
 			
 			this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			this.setBackground(Color.white);
+			this.setBackground(java.awt.Color.white);
 			
 			this.addMouseListener(this);
 			
