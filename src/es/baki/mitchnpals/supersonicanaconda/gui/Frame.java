@@ -120,12 +120,15 @@ public class Frame extends JFrame {
 
 		debugRunButton = new JButton("Run");
 		debugPanel.add(debugRunButton);
+		debugRunButton.addActionListener(new ButtonRunActionListener(ide));
 
 		debugStopButton = new JButton("Stop");
 		debugPanel.add(debugStopButton);
+		debugStopButton.addActionListener(new ButtonStopActionListener(ide));
 
 		debugStepButton = new JButton("Step");
 		debugPanel.add(debugStepButton);
+		debugStepButton.addActionListener(new ButtonStepActionListener(ide));
 
 	}
 
