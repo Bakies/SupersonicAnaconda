@@ -180,4 +180,9 @@ public enum Color {
 			return 0xFFFFFF;
 		}
 	}
+
+	public static Color awtToBakiesColor(java.awt.Color c) {
+		return Color.getColorFromRGBInt(c.getRGB());
+	}
+
 }

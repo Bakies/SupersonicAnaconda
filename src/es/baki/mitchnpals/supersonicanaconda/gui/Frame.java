@@ -356,7 +356,7 @@ public class Frame extends JFrame {
 		Canvas canvas = new Canvas(width, height);
 		for (int x = 0; x < width; x ++) {
 			for (int y = 0; y < height; y ++){
-				canvas.set(x, y, canvasPanel.getColorAt(x, y));
+				canvas.set(x, y, Color.awtToBakiesColor(canvasPanel.getColorAt(x, y)));
 			}
 		}
 		return canvas;

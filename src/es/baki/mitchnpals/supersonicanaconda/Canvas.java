@@ -163,7 +163,6 @@ public class Canvas {
 		return ret.substring(0, ret.length() - 1);
 	}
 
-
 	public static void main(String...strings) {
 		Canvas c = new Canvas(10);
 		c.set(0, 0, Color.BLACK);
