@@ -42,7 +42,7 @@ public class Frame extends JFrame {
 	private JLabel debugTitle; 
 	private JButton debugRunButton; 
 	private JButton debugStepButton;
-	private JButton debugStopButton; 
+	private JButton debugStopButton;
 	
 	private JPanel colorsPickerPanel;
 	private JLabel colorPickerTitle;
@@ -112,6 +112,15 @@ public class Frame extends JFrame {
 		
 		this.pack();
 		this.setVisible(true);
+	}
+	
+	private void makeNewCanvas(Canvas canvas) {
+		canvasPanel = new CanvasPanel(canvas.getHeight(), canvas.getWidth(), this);
+		for (int x = 0; x < canvas.getWidth(); x ++) {
+			for (int y = 0; y < canvas.getHeight(); y++) {
+				canvasPanel.setPanelColor(x, y, canvas.getAwtColor(x, y));
+			}
+		}
 	}
 	
 	private void makeToolPickerPicker() {
@@ -253,7 +262,15 @@ public class Frame extends JFrame {
 		save = new MenuItem("Save");
 		
 		fileMenu.add(newCanvas);
+		
 		fileMenu.add(open);
+		fileMenu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
 		fileMenu.add(save);
 		
 		menubar.add(fileMenu);

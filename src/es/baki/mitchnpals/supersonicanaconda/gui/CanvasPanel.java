@@ -44,7 +44,7 @@ public class CanvasPanel extends JPanel {
 			}
 		}
 	}
-	public void changePanelColor(int posX, int posY, Color c){
+	public void setPanelColor(int posX, int posY, Color c){
 		panels[posX][posY].setBackground(c);
 	}
 	

@@ -173,4 +173,9 @@ public class Canvas {
 		c.exportToPNG("exporttest.png");
 
 	}
+
+	public java.awt.Color getAwtColor(int x, int y) {
+		new java.awt.Color(Color.getRGB(getColor(x, y));
+		return null;
+	}
 }
