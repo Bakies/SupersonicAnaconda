@@ -1,17 +1,12 @@
 package es.baki.mitchnpals.supersonicanaconda.gui;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
+import es.baki.mitchnpals.supersonicanaconda.Color;
 
 public class CanvasPanel extends JPanel {
 	
@@ -44,10 +39,13 @@ public class CanvasPanel extends JPanel {
 			}
 		}
 	}
-	public void changePanelColor(int posX, int posY, Color c){
+	public void changePanelColor(int posX, int posY, java.awt.Color c){
 		panels[posX][posY].setBackground(c);
 	}
 	
+	public java.awt.Color getColorAt(int x, int y) {
+		return panels[x][y].getBackground();
+	}
 	
 	@SuppressWarnings("serial")
 	public class CodelPanel extends JPanel implements MouseListener{

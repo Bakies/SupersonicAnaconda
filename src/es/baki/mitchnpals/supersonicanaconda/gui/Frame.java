@@ -58,9 +58,11 @@ public class Frame extends JFrame {
 	private JPanel toolPickerPanel; 
 	private JLabel toolPickerTitle;
 	
-	private JPanel canvasPanel;
+	private CanvasPanel canvasPanel;
 
 	private IDE ide;
+	
+	private int width, height;
 	
 	public Color getSelectedColor() { 
 		return selectedColorPanel.getBackground();
@@ -68,6 +70,8 @@ public class Frame extends JFrame {
 	
 	public Frame(IDE ide, int height, int width) {
 		super("Supersonic Anaconda");
+		this.width = width; 
+		this.height = height;
 		this.ide = ide;
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -349,7 +353,12 @@ public class Frame extends JFrame {
 	}
 	
 	public Canvas getCanvas() {
-		// TODO Auto-generated method stub
-		return null;
+		Canvas canvas = new Canvas(width, height);
+		for (int x = 0; x < width; x ++) {
+			for (int y = 0; y < height; y ++){
+				canvas.set(x, y, canvasPanel.getColorAt(x, y));
+			}
+		}
+		return canvas;
 	}
 }

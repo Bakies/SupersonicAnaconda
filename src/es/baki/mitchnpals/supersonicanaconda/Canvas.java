@@ -3,6 +3,7 @@ package es.baki.mitchnpals.supersonicanaconda;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import es.baki.mitchnpals.supersonicanaconda.Color;
 
 import javax.imageio.ImageIO;
 
@@ -34,7 +35,7 @@ public class Canvas {
 		}
 	}
 
-	public void set(int x, int y, Color color) {
+	public void set(int x, int y, java.awt.Color color) {
 		if (color == null)
 			color = Color.WHITE;
 		canvas[x][y] = color;
