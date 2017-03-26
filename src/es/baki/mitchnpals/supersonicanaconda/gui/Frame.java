@@ -53,7 +53,7 @@ public class Frame extends JFrame {
 	
 	private JPanel canvasPanel;
 
-	public Frame() {
+	public Frame(int height, int width) {
 		super("Supersonic Anaconda");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		layoutManager = new GridBagLayout();
@@ -80,7 +80,7 @@ public class Frame extends JFrame {
 		c.gridy = 1;
 		this.add(toolPickerPanel, c);
 		
-		canvasPanel = new CanvasPanel(100, 100);
+		canvasPanel = new CanvasPanel(height, width);
 		c.fill = GridBagConstraints.NONE;
 		c.gridx = 2;
 		c.gridy = 0;
