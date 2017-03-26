@@ -45,9 +45,10 @@ public class Interpreter {
 	public boolean step() throws Exception {
 		if (debug)
 			System.out.println(stack);
-		checkSurrounding(posX, posY);
-		codel = Codel.getFarthest(dp, cc, checked);
-		if (codel != null) {
+		if (canvas.getColor(posX,posY) != Color.WHITE)
+		{
+			checkSurrounding(posX, posY);
+			codel = Codel.getFarthest(dp, cc, checked);
 			posX = codel.getX();
 			posY = codel.getY();
 		}
@@ -58,25 +59,18 @@ public class Interpreter {
 			changeCC(1);
 			if(wait%2 == 0)
 				changeDirection(1);
-			if(wait == 8)
+			if(wait >= 8)
 				return false;
-			//System.out.println("wait");
-			//System.out.println(posX + ", " + posY + ", " + dp + ", " + cc);
-			if (lastBlock != null && canvas.getColor(posX, posY) == Color.WHITE) {
-				posX = Codel.getFarthest(dp, cc, lastBlock).getX();
-				posY = Codel.getFarthest(dp, cc, lastBlock).getY();
-			}
+			//System.out.println("wait(" + wait + ")");
 				
-		} else if (canvas.getColor(posX, posY) == Color.WHITE) { 
-			wait = 0;
-			op = 0;
-			posX += x;
-			posY += y;				
 		} else {
 			wait = 0;
-			deltaHue = canvas.getColor(posX,posY).getHueDifference(canvas.getColor(posX + x, posY + y));
-			deltaDarkness = canvas.getColor(posX,posY).getDarknessDifference(canvas.getColor(posX + x, posY + y));		
-			op = deltaDarkness + deltaHue *10;
+			op = 0;
+			if(canvas.getColor(posX, posY) != Color.WHITE){
+				deltaHue = canvas.getColor(posX,posY).getHueDifference(canvas.getColor(posX + x, posY + y));
+				deltaDarkness = canvas.getColor(posX,posY).getDarknessDifference(canvas.getColor(posX + x, posY + y));		
+				op = deltaDarkness + deltaHue *10;
+			}
 			posX += x;
 			posY += y;
 		}
@@ -169,8 +163,6 @@ public class Interpreter {
 	}
 
 	public int checkSurrounding(int x, int y) {
-		if(checked != null && checked.get(0).getColor() != Color.WHITE)
-			lastBlock = checked; 
 		checked = new ArrayList<Codel>();
 		return checkSurroundingHelp(x, y);
 	}
@@ -191,8 +183,9 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
-		Interpreter i = new Interpreter(Canvas.readFromPNGFile("fib.png"), System.in);
-		i.toggleDebug();
+		Interpreter i = new Interpreter(Canvas.readFromPNGFile("fizzbuzz.png"), System.in);
+		i.run();
+		/*i.toggleDebug();
 		while (true) {
 			try {
 				i.step();
@@ -201,6 +194,7 @@ public class Interpreter {
 				e.printStackTrace();
 			}
 		}
+		 */
 	}
 
 }
