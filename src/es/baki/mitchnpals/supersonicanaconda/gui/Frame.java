@@ -301,7 +301,7 @@ public class Frame extends JFrame {
 		} 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Action performed stub
+			// TODO Save file - Action performed stub
 		} 
 		
 	}
@@ -313,7 +313,7 @@ public class Frame extends JFrame {
 		} 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Action performed stub
+			makeNewCanvas(new Canvas(10));
 		} 
 		
 	}
