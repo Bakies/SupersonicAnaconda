@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import es.baki.mitchnpals.supersonicanaconda.Interpreter;
 
 public class Frame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -53,7 +57,11 @@ public class Frame extends JFrame {
 	
 	private JPanel canvasPanel;
 
-	public Frame(int height, int width) {
+	private IDE ide;
+	
+	public Frame(IDE ide, int height, int width) {
+		this.ide = ide;
+		
 		super("Supersonic Anaconda");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		layoutManager = new GridBagLayout();
@@ -232,5 +240,40 @@ public class Frame extends JFrame {
 
 		ioOutput = new JTextArea();
 		ioPanel.add(ioOutput);
+	}
+
+	public class ButtonStopActionListener implements ActionListener {
+		IDE ide;
+		public ButtonStopActionListener(IDE ide) {
+			this.ide = ide;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ide.stopInterpreter();
+		} 
+		
+	}
+	public class ButtonStepActionListener implements ActionListener {
+		IDE ide;
+		public ButtonStepActionListener(IDE ide) {
+			this.ide = ide;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ide.stepInterpreter();
+		} 
+	}
+	public class ButtonRunActionListener implements ActionListener {
+		IDE ide;
+		public ButtonRunActionListener(IDE ide) {
+			this.ide = ide;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ide.runInterpreter();
+		} 
 	}
 }
