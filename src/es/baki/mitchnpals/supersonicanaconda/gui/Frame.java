@@ -9,6 +9,8 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -120,15 +122,16 @@ public class Frame extends JFrame {
 
 		debugRunButton = new JButton("Run");
 		debugPanel.add(debugRunButton);
-		debugRunButton.addActionListener(new ButtonRunActionListener(ide));
+		debugRunButton.addActionListener(new ButtonRunActionListener(this, ide));
+		
 
 		debugStopButton = new JButton("Stop");
 		debugPanel.add(debugStopButton);
-		debugStopButton.addActionListener(new ButtonStopActionListener(ide));
+		debugStopButton.addActionListener(new ButtonStopActionListener(this, ide));
 
 		debugStepButton = new JButton("Step");
 		debugPanel.add(debugStepButton);
-		debugStepButton.addActionListener(new ButtonStepActionListener(ide));
+		debugStepButton.addActionListener(new ButtonStepActionListener(this, ide));
 
 	}
 
@@ -247,8 +250,10 @@ public class Frame extends JFrame {
 
 	public class ButtonStopActionListener implements ActionListener {
 		IDE ide;
-		public ButtonStopActionListener(IDE ide) {
+		Frame f; 
+		public ButtonStopActionListener(Frame f, IDE ide) {
 			this.ide = ide;
+			this.f = f; 
 		}
 		
 		@Override
@@ -259,7 +264,9 @@ public class Frame extends JFrame {
 	}
 	public class ButtonStepActionListener implements ActionListener {
 		IDE ide;
-		public ButtonStepActionListener(IDE ide) {
+		Frame f;
+		public ButtonStepActionListener(Frame f, IDE ide) {
+			this.f = f;
 			this.ide = ide;
 		}
 		
@@ -270,8 +277,10 @@ public class Frame extends JFrame {
 	}
 	public class ButtonRunActionListener implements ActionListener {
 		IDE ide;
-		public ButtonRunActionListener(IDE ide) {
+		Frame f;
+		public ButtonRunActionListener(Frame f, IDE ide) {
 			this.ide = ide;
+			this.f = f;
 		}
 		
 		@Override
@@ -279,6 +288,7 @@ public class Frame extends JFrame {
 			ide.runInterpreter();
 		} 
 	}
+	
 	public Canvas getCanvas() {
 		// TODO Auto-generated method stub
 		return null;
