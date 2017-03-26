@@ -1,6 +1,7 @@
 package es.baki.mitchnpals.supersonicanaconda.gui;
 
-import es.baki.mitchnpals.supersonicanaconda.*;
+import es.baki.mitchnpals.supersonicanaconda.Canvas;
+import es.baki.mitchnpals.supersonicanaconda.Interpreter;
 
 public class IDE {
 	private Frame frame; 
@@ -18,7 +19,7 @@ public class IDE {
 	}
 	
 	public static void main(String[] args) {
-		IDE ide = new IDE(10, 10);
+		new IDE(10, 10);
 	}
 	public void stepInterpreter() {
 		try {

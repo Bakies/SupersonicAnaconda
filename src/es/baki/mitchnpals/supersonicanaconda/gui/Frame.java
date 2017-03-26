@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.plaf.FileChooserUI;
 
 import es.baki.mitchnpals.supersonicanaconda.Canvas;
 
@@ -418,6 +417,7 @@ public class Frame extends JFrame {
 		Canvas canvas = new Canvas(width, height);
 		for (int x = 0; x < width; x ++) {
 			for (int y = 0; y < height; y ++){
+				// backwards because we are converting out of gui, origins top left instead of bottom right
 				canvas.set(y, x, es.baki.mitchnpals.supersonicanaconda.Color.awtToBakiesColor(canvasPanel.getColorAt(x, y)));
 			}
 		}
