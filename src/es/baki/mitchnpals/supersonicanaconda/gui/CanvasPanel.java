@@ -6,7 +6,12 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+
+import es.baki.mitchnpals.supersonicanaconda.Codel;
+
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 
 public class CanvasPanel extends JPanel {
 	
@@ -18,10 +23,23 @@ public class CanvasPanel extends JPanel {
 	
 	private CodelPanel[][] panels;
 	private Frame f;
+	
+	@Override
+	public void setSize(Dimension d) {
+		this.setSize(d.width, d.height);
+	}
+	
+	@Override
+	public void setSize(int x, int y) {
+		super.setSize(x, y);
+		placePanels(x, y);
+	}
+	
 	public CanvasPanel(Frame f){
 		super(new GridLayout(10,10));
 		placePanels(10,10);
 		this.f = f;
+		
 	}
 	public CanvasPanel(int width, int height, Frame f){
 		super(new GridLayout(width, height));
@@ -35,12 +53,19 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public void placePanels(int width, int height){
+		while (this.getComponentCount() > 0){
+			this.remove(0);
+		}
+		this.setLayout(new GridLayout(width, height));
+		
 		panels = new CodelPanel[width][height];		
 
+		
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++){
-				panels[i][j] = new CodelPanel(i, j);
-				this.add(panels[i][j]);
+				// J and I are backwards because we are converting to gui which origins in the top left
+				panels[j][i] = new CodelPanel(j, i);
+				this.add(panels[j][i]);
 			}
 		}
 	}

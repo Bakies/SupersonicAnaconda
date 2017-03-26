@@ -11,15 +11,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.plaf.FileChooserUI;
 
 import es.baki.mitchnpals.supersonicanaconda.Canvas;
 
@@ -30,7 +33,9 @@ public class Frame extends JFrame {
 	// Menu bar stuff
 	private MenuBar menubar;
 	private Menu fileMenu;
-	private MenuItem open, newCanvas, save;
+	private FileOpenButton open;
+	private FileNewButton newCanvas;
+	private FileSaveButton save;
 	
 	// Panels
 	private JPanel ioPanel;
@@ -100,6 +105,7 @@ public class Frame extends JFrame {
 		this.add(toolPickerPanel, c);
 		
 		canvasPanel = new CanvasPanel(height, width, this);
+		canvasPanel.setAutoscrolls(true);
 		c.fill = GridBagConstraints.NONE;
 		c.gridx = 2;
 		c.gridy = 0;
@@ -115,7 +121,8 @@ public class Frame extends JFrame {
 	}
 	
 	private void makeNewCanvas(Canvas canvas) {
-		canvasPanel = new CanvasPanel(canvas.getHeight(), canvas.getWidth(), this);
+		canvasPanel.setSize(canvas.getWidth(), canvas.getHeight());
+		this.pack();
 		for (int x = 0; x < canvas.getWidth(); x ++) {
 			for (int y = 0; y < canvas.getHeight(); y++) {
 				canvasPanel.setPanelColor(x, y, canvas.getAwtColor(x, y));
@@ -257,24 +264,62 @@ public class Frame extends JFrame {
 		menubar = new MenuBar();
 		fileMenu = new Menu("File");
 		
-		newCanvas = new MenuItem("New");
-		open = new MenuItem("Open");
-		save = new MenuItem("Save");
+		newCanvas = new FileNewButton("New");
+		open = new FileOpenButton(this, "Open");
+		save = new FileSaveButton("Save");
 		
 		fileMenu.add(newCanvas);
-		
 		fileMenu.add(open);
-		fileMenu.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
 		fileMenu.add(save);
 		
 		menubar.add(fileMenu);
 	}
+	
+	private class FileOpenButton extends MenuItem implements ActionListener {
+		private static final long serialVersionUID = 7904843145726959810L;
+		private Frame parent; 
+		public FileOpenButton(Frame parent, String title) {
+			super(title);
+			
+			this.addActionListener(this);
+		} 
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			final JFileChooser fc = new JFileChooser(); 
+			fc.showDialog(parent, "Open");
+			
+			File file = fc.getSelectedFile();
+			makeNewCanvas(Canvas.readFromFile(file));
+		} 
+		
+	}
+
+	private class FileSaveButton extends MenuItem implements ActionListener {
+		private static final long serialVersionUID = 7904843145726959811L;
+		public FileSaveButton(String title) {
+			super(title);
+			this.addActionListener(this);
+		} 
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Action performed stub
+		} 
+		
+	}
+	private class FileNewButton extends MenuItem implements ActionListener {
+		private static final long serialVersionUID = 7904843145726959812L;
+		public FileNewButton(String title) {
+			super(title);
+			this.addActionListener(this);
+		} 
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Action performed stub
+		} 
+		
+	}
+
+	
 	
 	private void makeIOPanel() {
 		ioPanel = new JPanel();

@@ -63,6 +63,9 @@ public class Canvas {
 
 	public static Canvas readFromFile(String filename) {
 		File file = new File(filename);
+		return readFromFile(file);
+	}
+	public static Canvas readFromFile(File file) {
 		BufferedImage image ;
 		if (!file.exists()){
 			System.err.println("File does not exist " + file.getAbsolutePath());
@@ -163,19 +166,14 @@ public class Canvas {
 		return ret.substring(0, ret.length() - 1);
 	}
 
+	public java.awt.Color getAwtColor(int x, int y) {
+		return new java.awt.Color(Color.getRGB(getColor(x, y)));
+	}
 	public static void main(String...strings) {
-		Canvas c = new Canvas(10);
-		c.set(0, 0, Color.BLACK);
-		c.set(0, 1, Color.LIGHT_MAGENTA);
+		Canvas c = readFromFile("hello2.png");
 		System.out.println(c);
 		System.out.println(c.toReadableString());
-		
-		c.exportToPNG("exporttest.png");
-
 	}
 
-	public java.awt.Color getAwtColor(int x, int y) {
-		new java.awt.Color(Color.getRGB(getColor(x, y)));
-		return null;
-	}
+
 }
