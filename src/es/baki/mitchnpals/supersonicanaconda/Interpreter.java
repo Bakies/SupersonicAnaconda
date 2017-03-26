@@ -27,21 +27,6 @@ public class Interpreter {
 		debug = !debug;
 	}
 	
-	public void run() {
-		try {
-			while(step());
-		} catch (Exception e) {
-			//System.out.println(e.getStackTrace());
-			e.printStackTrace();
-			try {
-				Thread.sleep(3 * 1000);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			run();
-		}
-	}
-
 	public boolean step() throws Exception {
 		if (debug)
 			System.out.println(stack);

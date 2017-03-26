@@ -279,4 +279,8 @@ public class Frame extends JFrame {
 			ide.runInterpreter();
 		} 
 	}
+	public Canvas getCanvas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
