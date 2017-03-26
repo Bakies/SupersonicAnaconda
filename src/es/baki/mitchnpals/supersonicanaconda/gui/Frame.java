@@ -273,6 +273,7 @@ public class Frame extends JFrame {
 	public class ColorSelectorPanel extends JPanel implements MouseListener {
 		private Frame f; 
 		public ColorSelectorPanel(Frame f) {
+			this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 			this.addMouseListener(this);
 			this.f = f;
 		}
