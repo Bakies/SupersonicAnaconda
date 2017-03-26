@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -60,6 +61,10 @@ public class Frame extends JFrame {
 	private JPanel canvasPanel;
 
 	private IDE ide;
+	
+	public Color getSelectedColor() { 
+		return selectedColorPanel.getBackground();
+	}
 	
 	public Frame(IDE ide, int height, int width) {
 		super("Supersonic Anaconda");
@@ -150,67 +155,85 @@ public class Frame extends JFrame {
 		JPanel colors = new JPanel();
 		colors.setLayout(new GridLayout(7, 3, 3, 3));
 		
-		lred = new JPanel();
+		lred = new ColorSelectorPanel(this);
 		lred.setBackground(new Color(0xFFC0C0));
 		colors.add(lred);
-		red = new JPanel();
+		
+		red = new ColorSelectorPanel(this);
 		red.setBackground(new Color(0xFF0000));
 		colors.add(red);
-		dred = new JPanel();
+		
+		dred = new ColorSelectorPanel(this);
 		dred.setBackground(new Color(0xC00000));
 		colors.add(dred);
-		lyel = new JPanel();
+		
+		lyel = new ColorSelectorPanel(this);
 		lyel.setBackground(new Color(0xFFFFC0));
 		colors.add(lyel);
-		yel = new JPanel();
+		
+		yel = new ColorSelectorPanel(this);
 		yel.setBackground(new Color(0xFFFF00));
 		colors.add(yel);
-		dyel = new JPanel();
+		
+		dyel = new ColorSelectorPanel(this);
 		dyel.setBackground(new Color(0xC0C000));
 		colors.add(dyel);
-		lgrn = new JPanel();
+		
+		lgrn = new ColorSelectorPanel(this);
 		lgrn.setBackground(new Color(0xC0FFC0));
 		colors.add(lgrn);
-		grn = new JPanel();
+		
+		grn = new ColorSelectorPanel(this);
 		grn.setBackground(new Color(0x00FF00));
 		colors.add(grn);
-		dgrn = new JPanel();
+		
+		dgrn = new ColorSelectorPanel(this);
 		dgrn.setBackground(new Color(0x00C000));
 		colors.add(dgrn);
-		lcyn = new JPanel();
+		
+		lcyn = new ColorSelectorPanel(this);
 		lcyn.setBackground(new Color(0xC0FfFF));
 		colors.add(lcyn);
-		cyn = new JPanel();
+		
+		cyn = new ColorSelectorPanel(this);
 		cyn.setBackground(new Color(0x00FFFF));
 		colors.add(cyn);
-		dcyn = new JPanel();
+		
+		dcyn = new ColorSelectorPanel(this);
 		dcyn.setBackground(new Color(0x00C0C0));
 		colors.add(dcyn);
-		lblu = new JPanel();
+		
+		lblu = new ColorSelectorPanel(this);
 		lblu.setBackground(new Color(0xC0C0FF));
 		colors.add(lblu);
-		blu = new JPanel();
+		
+		blu = new ColorSelectorPanel(this);
 		blu.setBackground(new Color(0x0000FF));
 		colors.add(blu);
-		dblu = new JPanel();
+		
+		dblu = new ColorSelectorPanel(this);
 		dblu.setBackground(new Color(0x0000C0));
 		colors.add(dblu);
-		lmag = new JPanel();
+		
+		lmag = new ColorSelectorPanel(this);
 		lmag.setBackground(new Color(0xFFC0FF));
 		colors.add(lmag);
-		mag = new JPanel();
+		
+		mag = new ColorSelectorPanel(this);
 		mag.setBackground(new Color(0xFF00FF));
 		colors.add(mag);
-		dmag = new JPanel();
+		
+		dmag = new ColorSelectorPanel(this);
 		dmag.setBackground(new Color(0xC000C0));
 		colors.add(dmag);
-		white = new JPanel();
+		
+		white = new ColorSelectorPanel(this);
 		white.setBackground(new Color(0xFFFFFF));
 		colors.add(white);
 		
 		colors.add(new JPanel());
 		
-		black = new JPanel();
+		black = new ColorSelectorPanel(this);
 		black.setBackground(new Color(0x000000));
 		colors.add(black);
 		
@@ -235,8 +258,6 @@ public class Frame extends JFrame {
 	private void makeIOPanel() {
 		ioPanel = new JPanel();
 		ioPanel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		
 		
 		ioTitle = new JLabel("Input/Output");	
 		ioPanel.add(ioTitle);
@@ -248,6 +269,43 @@ public class Frame extends JFrame {
 		ioPanel.add(ioOutput);
 	}
 
+	@SuppressWarnings("serial")
+	public class ColorSelectorPanel extends JPanel implements MouseListener {
+		private Frame f; 
+		public ColorSelectorPanel(Frame f) {
+			this.addMouseListener(this);
+			this.f = f;
+		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			f.selectedColorPanel.setBackground(this.getBackground());
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			this.setBorder(BorderFactory.createLineBorder(Color.black));
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			this.setBorder(BorderFactory.createLineBorder(Color.white));
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// ignored
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// ignored
+		} 
+		
+		
+	}
+	
 	public class ButtonStopActionListener implements ActionListener {
 		IDE ide;
 		Frame f; 

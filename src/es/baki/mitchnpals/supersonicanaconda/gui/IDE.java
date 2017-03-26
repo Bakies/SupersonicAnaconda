@@ -42,6 +42,9 @@ public class IDE {
 			r.start();		
 		}
 	}
+	public Frame getFrame() {
+		return this.frame;
+	}
 
 }
 
