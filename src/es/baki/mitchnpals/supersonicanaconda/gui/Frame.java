@@ -33,9 +33,11 @@ public class Frame extends JFrame {
 	// Menu bar stuff
 	private MenuBar menubar;
 	private Menu fileMenu;
+	private Menu editMenu;
 	private FileOpenButton open;
 	private FileNewButton newCanvas;
 	private FileSaveButton save;
+	private EditUndoButton undo; 
 	
 	// Panels
 	private JPanel ioPanel;
@@ -262,6 +264,7 @@ public class Frame extends JFrame {
 		menubar = new MenuBar();
 		fileMenu = new Menu("File");
 		
+		// File menu
 		newCanvas = new FileNewButton("New");
 		open = new FileOpenButton(this, "Open");
 		save = new FileSaveButton(this, "Save");
@@ -271,6 +274,11 @@ public class Frame extends JFrame {
 		fileMenu.add(save);
 		
 		menubar.add(fileMenu);
+		
+		// Edit Menu
+		editMenu = new Menu("Edit");
+		undo = new EditUndoButton(this, "Undo");
+		
 	}
 	
 	private class FileOpenButton extends MenuItem implements ActionListener {
@@ -292,6 +300,22 @@ public class Frame extends JFrame {
 		
 	}
 
+	private class EditUndoButton extends MenuItem implements ActionListener {
+		private static final long serialVersionUID = -8620889261216735117L;
+		private Frame parent; 
+		public EditUndoButton(Frame frame, String title) {
+			super();
+			this.parent = parent;
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			parent.canvasPanel.undo();
+		} 
+		
+	}
+	
 	private class FileSaveButton extends MenuItem implements ActionListener {
 		private static final long serialVersionUID = 7904843145726959811L;
 		private Frame parent;

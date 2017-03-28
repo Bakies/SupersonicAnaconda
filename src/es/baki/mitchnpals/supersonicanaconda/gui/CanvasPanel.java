@@ -16,11 +16,12 @@ public class CanvasPanel extends JPanel {
 	private boolean mouseDown = false;
 	private int mouseDownXCoord = 0, mouseDownYCoord = 0; 
 	private int mouseXCoord = 0, mouseYCoord = 0;
-	private int mouseButton;
+	private int selectedX = 0, selectedY = 0;
+	private int mouseButton = -1;
 
 	private int height, width;
 
-	private CodelPanel[][] panels;
+	private CodelPanel[][] panels, undo;
 	private Frame f;
 
 	public void setCodelGridSize(int x, int y) {
@@ -181,8 +182,19 @@ public class CanvasPanel extends JPanel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			int xSize = Math.max(1, Math.max(mouseDownXCoord, mouseXCoord) - Math.min(mouseDownXCoord, mouseXCoord));
+			int ySize = Math.max(1, Math.max(mouseDownYCoord, mouseYCoord) - Math.min(mouseDownYCoord, mouseYCoord));
+			System.out.println("Selection size: " + xSize + " " + ySize);
+			undo = new CodelPanel[ySize][xSize];
+			
+			selectedX = Math.min(mouseDownXCoord, mouseXCoord);
+			selectedY = Math.min(mouseDownYCoord, mouseYCoord);
+			
 			for (int x = Math.min(mouseDownXCoord, mouseXCoord); x <= Math.max(mouseDownXCoord, mouseXCoord); x++) {
 				for (int y = Math.min(mouseDownYCoord, mouseYCoord); y <= Math.max(mouseDownYCoord, mouseYCoord); y ++) {
+					undo[x - Math.min(mouseDownXCoord, mouseXCoord)][y - Math.min(mouseDownYCoord, mouseYCoord)] = panels[x][y];
+					panels[x][y] = new CodelPanel(x, y);
+					panels[x][y].select();
 					panels[x][y].setBackground(f.getSelectedColor());
 				}
 			}
@@ -190,5 +202,13 @@ public class CanvasPanel extends JPanel {
 
 		}
 
+	}
+
+	public void undo() {
+		for (int x = selectedX; x < undo.length + selectedX; x ++) {
+			for (int y = selectedY; y < undo[0].length + selectedY; y ++) {
+				panels[x][y] = undo[x - selectedX][y - selectedY];
+			}
+		}
 	}
 }
