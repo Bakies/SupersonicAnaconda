@@ -23,10 +23,10 @@ public class CanvasPanel extends JPanel {
 	private CodelPanel[][] panels;
 	private Frame f;
 
-	public void setCodelGridSize(int x, int y) {
-		this.height = x; 
-		this.width = y;
-		placePanels(x, y);
+	public void setCodelGridSize(int width, int height) {
+		this.height = height;
+		this.width = width;
+		placePanels(height, width);
 	}
 
 	public int getCodelGridHeight() {
@@ -40,17 +40,22 @@ public class CanvasPanel extends JPanel {
 	public CanvasPanel(Frame f){
 		super(new GridLayout(10,10));
 		placePanels(10,10);
+		this.width = this.height = 10;
 		this.f = f;
 
 	}
 	public CanvasPanel(int width, int height, Frame f){
 		super(new GridLayout(width, height));
 		placePanels(width, height);
+		this.height = height;
+		this.width = width;
 		this.f = f;
 	}
 	public CanvasPanel(GridLayout gl, Frame f){
 		super(gl);
 		placePanels(gl.getColumns(), gl.getRows());
+		this.width = gl.getColumns();
+		this.height = gl.getRows();
 		this.f = f;
 	}
 
@@ -71,12 +76,33 @@ public class CanvasPanel extends JPanel {
 			}
 		}
 	}
+
+	public int getCanvasHeight() {
+		return height;
+	}
+
+	public int getCanvasWidth() {
+		return width;
+	}
+
 	public void setPanelColor(int posX, int posY, Color c){
 		panels[posX][posY].setBackground(c);
 	}
 
 	public java.awt.Color getColorAt(int x, int y) {
 		return panels[x][y].getBackground();
+	}
+
+	@Override
+	@Deprecated // This is to make sure we use getCanvasHeight
+	public int getHeight() {
+		return super.getHeight();
+	}
+
+	@Override
+	@Deprecated // This is to make sure we use getCanvasWidth
+	public int getWidth() {
+		return super.getWidth();
 	}
 
 	@SuppressWarnings("serial")
@@ -134,9 +160,9 @@ public class CanvasPanel extends JPanel {
 
 			mouseXCoord = codelX;
 			mouseYCoord = codelY;
-			
+
 			System.out.println("X: " + mouseXCoord + ", Y: " + mouseYCoord);
-			
+
 			if (mouseDown)
 				for (CodelPanel[] x : panels) {
 					for (CodelPanel p : x) {
@@ -155,10 +181,10 @@ public class CanvasPanel extends JPanel {
 		@Override
 		public void mouseExited(MouseEvent e) {
 			if (selected) {
-				this.setBorderColor(Color.BLUE); // FIXME The color is the same
-													// as one of the codel
-													// colors and doesnt look
-													// good
+				this.setBorderColor(Color.BLUE); // TODO Change the color
+				// as one of the codel
+				// colors and doesnt look
+				// good
 			} else {
 				this.setBorderColor(Color.BLACK);
 			}
@@ -185,26 +211,29 @@ public class CanvasPanel extends JPanel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			int maxX, maxY, minX, minY; 
-			maxX = Math.max(mouseDownXCoord, mouseXCoord);
-			maxY = Math.max(mouseDownYCoord, mouseYCoord);
-			
-			minX = Math.min(mouseDownXCoord, mouseXCoord);
-			minY = Math.min(mouseDownYCoord, mouseYCoord);
-			
-			int xSize = maxX - minX + 1;
-			int ySize = minX - minY + 1; 
-			System.out.println("Selection size: " + xSize + " " + ySize);
-			
-			for (int x = minX; x <= maxX; x++) {
-				for (int y = minY; y <= maxY; y ++) {
-					panels[x][y].unselect();
-					panels[x][y].setBackground(f.getSelectedColor());
+			switch (IDE.getIDE().getTool()) {
+			case fill:
+				IDE.getIDE().snapHistory();
+				int maxX, maxY, minX, minY;
+				maxX = Math.max(mouseDownXCoord, mouseXCoord);
+				maxY = Math.max(mouseDownYCoord, mouseYCoord);
+
+				minX = Math.min(mouseDownXCoord, mouseXCoord);
+				minY = Math.min(mouseDownYCoord, mouseYCoord);
+
+				int xSize = maxX - minX + 1;
+				int ySize = minX - minY + 1;
+				System.out.println("Selection size: " + xSize + " " + ySize);
+
+				for (int x = minX; x <= maxX; x++) {
+					for (int y = minY; y <= maxY; y++) {
+						panels[x][y].unselect();
+						panels[x][y].setBackground(f.getSelectedColor());
+					}
 				}
+				mouseDown = false;
+				break;
 			}
-			mouseDown = false;
-
 		}
-
 	}
 }

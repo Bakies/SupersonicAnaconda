@@ -179,5 +179,17 @@ public class Canvas {
 		System.out.println(c.toReadableString());
 	}
 
+	@Override
+	public Canvas clone() {
+		Canvas c = new Canvas(width, height);
+		for (int x = 0; x < width; x ++)  {
+			for (int y = 0; y < height; y ++) {
+				// XXX WHO THE FUCK KNOWS WHY THESE ARE REVERSED AAAAH
+				c.set(y, x, this.getColor(x, y));
+			}
+		}
+		return c;
+	}
+
 
 }

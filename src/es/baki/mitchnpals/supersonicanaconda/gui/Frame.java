@@ -37,7 +37,8 @@ public class Frame extends JFrame {
 	private FileOpenButton open;
 	private FileNewButton newCanvas;
 	private FileSaveButton save;
-	private EditUndoButton undo;
+	private MenuItem undo;
+	private MenuItem redo;
 
 	// Panels
 	private JPanel ioPanel;
@@ -59,18 +60,16 @@ public class Frame extends JFrame {
 
 	private JPanel toolPickerPanel;
 	private JLabel toolPickerTitle;
+	private JButton toolFillButton; // TODO I think
 
 	private CanvasPanel canvasPanel;
-
-	private IDE ide;
 
 	public Color getSelectedColor() {
 		return selectedColorPanel.getBackground();
 	}
 
-	public Frame(IDE ide) {
+	public Frame() {
 		super("Supersonic Anaconda");
-		this.ide = ide;
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		layoutManager = new GridBagLayout();
@@ -115,7 +114,7 @@ public class Frame extends JFrame {
 
 	}
 
-	private void makeNewCanvas(Canvas canvas) {
+	public void makeNewCanvas(Canvas canvas) {
 		canvasPanel.setCodelGridSize(canvas.getWidth(), canvas.getHeight());
 		this.pack();
 		for (int x = 0; x < canvas.getWidth(); x++) {
@@ -131,6 +130,14 @@ public class Frame extends JFrame {
 
 		toolPickerTitle = new JLabel("Tools");
 		toolPickerPanel.add(toolPickerTitle);
+
+		toolFillButton = new JButton("Fill");
+		toolFillButton.setEnabled(false);
+		toolFillButton.addActionListener(new ButtonFillToolActionListener());
+	}
+
+	public void toolChange() {
+		// TODO make the current tool disabled, enable others
 	}
 
 	private void makeDebugPanel() {
@@ -142,15 +149,15 @@ public class Frame extends JFrame {
 
 		debugRunButton = new JButton("Run");
 		debugPanel.add(debugRunButton);
-		debugRunButton.addActionListener(new ButtonRunActionListener(this, ide));
+		debugRunButton.addActionListener(new ButtonRunActionListener());
 
 		debugStopButton = new JButton("Stop");
 		debugPanel.add(debugStopButton);
-		debugStopButton.addActionListener(new ButtonStopActionListener(this, ide));
+		debugStopButton.addActionListener(new ButtonStopActionListener());
 
 		debugStepButton = new JButton("Step");
 		debugPanel.add(debugStepButton);
-		debugStepButton.addActionListener(new ButtonStepActionListener(this, ide));
+		debugStepButton.addActionListener(new ButtonStepActionListener());
 
 	}
 
@@ -271,7 +278,15 @@ public class Frame extends JFrame {
 
 		// Edit Menu
 		editMenu = new Menu("Edit");
-		undo = new EditUndoButton(this, "Undo");
+		undo = new MenuItem("Undo");
+		undo.addActionListener(new EditUndoButton());
+		editMenu.add(undo);
+
+		redo = new MenuItem("Redo");
+		redo.addActionListener(new EditRedoButton());
+		editMenu.add(redo);
+
+		menubar.add(editMenu);
 
 	}
 
@@ -281,7 +296,6 @@ public class Frame extends JFrame {
 
 		public FileOpenButton(Frame parent, String title) {
 			super(title);
-
 			this.addActionListener(this);
 		}
 
@@ -291,23 +305,25 @@ public class Frame extends JFrame {
 			fc.showDialog(parent, "Open");
 
 			File file = fc.getSelectedFile();
+			IDE.getIDE().clearHistory();
 			makeNewCanvas(Canvas.readFromFile(file));
+			IDE.getIDE().snapHistory();
 		}
 
 	}
 
-	private class EditUndoButton extends MenuItem implements ActionListener {
-		private static final long serialVersionUID = -8620889261216735117L;
-		private Frame parent;
-
-		public EditUndoButton(Frame frame, String title) {
-			super();
-			this.addActionListener(this);
-		}
-
+	private class EditUndoButton implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO
+			IDE.getIDE().undo();
+		}
+
+	}
+
+	private class EditRedoButton implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			IDE.getIDE().redo();
 		}
 
 	}
@@ -345,6 +361,16 @@ public class Frame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			makeNewCanvas(new Canvas(1, 10));
+		}
+
+	}
+
+	private class ButtonFillToolActionListener extends MenuItem implements ActionListener {
+		private static final long serialVersionUID = 7904843145726959812L;
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			IDE.getIDE().setTool(IDE.Tool.fill);
 		}
 
 	}
@@ -403,55 +429,31 @@ public class Frame extends JFrame {
 	}
 
 	public class ButtonStopActionListener implements ActionListener {
-		IDE ide;
-		Frame f;
-
-		public ButtonStopActionListener(Frame f, IDE ide) {
-			this.ide = ide;
-			this.f = f;
-		}
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ide.stopInterpreter();
+			IDE.getIDE().stopInterpreter();
 		}
 
 	}
 
 	public class ButtonStepActionListener implements ActionListener {
-		IDE ide;
-		Frame f;
-
-		public ButtonStepActionListener(Frame f, IDE ide) {
-			this.f = f;
-			this.ide = ide;
-		}
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ide.stepInterpreter();
+			IDE.getIDE().stepInterpreter();
 		}
 	}
 
 	public class ButtonRunActionListener implements ActionListener {
-		IDE ide;
-		Frame f;
-
-		public ButtonRunActionListener(Frame f, IDE ide) {
-			this.ide = ide;
-			this.f = f;
-		}
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ide.runInterpreter();
+			IDE.getIDE().runInterpreter();
 		}
 	}
 
 	public Canvas getCanvas() {
-		Canvas canvas = new Canvas(canvasPanel.getWidth(), canvasPanel.getHeight());
-		for (int x = 0; x < canvasPanel.getWidth(); x++) {
-			for (int y = 0; y < canvasPanel.getHeight(); y++) {
+		Canvas canvas = new Canvas(canvasPanel.getCanvasWidth(), canvasPanel.getCanvasHeight());
+		for (int x = 0; x < canvasPanel.getCanvasWidth(); x++) {
+			for (int y = 0; y < canvasPanel.getCanvasHeight(); y++) {
 				// backwards because we are converting out of gui, origins top
 				// left instead of bottom right
 				canvas.set(x, y,

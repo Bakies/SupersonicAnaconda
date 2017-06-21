@@ -1,28 +1,36 @@
 package es.baki.mitchnpals.supersonicanaconda.gui;
 
+import java.util.Stack;
+
 import javax.swing.JOptionPane;
 
 import es.baki.mitchnpals.supersonicanaconda.Canvas;
 import es.baki.mitchnpals.supersonicanaconda.Interpreter;
 
 public class IDE {
+	private static IDE ide;
+
 	private Frame frame;
 	public Interpreter i;
 	public boolean run = true;
 	private boolean running = false;
 	private boolean firstRun = true;
+	private Tool currTool = Tool.fill;
+	private Stack<Canvas> history, unhistory;
 
 	public enum Tool {
 		fill;
 	}
 
-	public IDE(int height, int width) {
-		frame = new Frame(this);
-
+	private IDE(int height, int width) {
+		ide = this;
+		frame = new Frame();
+		history = new Stack<Canvas>();
+		unhistory = new Stack<Canvas>();
 	}
 
-	public IDE() {
-		this(10, 10);
+	public static IDE getIDE() {
+		return ide;
 	}
 
 	public static void main(String[] args) {
@@ -69,6 +77,43 @@ public class IDE {
 		return this.frame;
 	}
 
+	public Tool getTool() {
+		return currTool;
+	}
+
+	public void setTool(Tool currToo) {
+		this.currTool = currToo;
+	}
+
+	public void clearHistory() {
+		history.clear();
+		unhistory.clear();
+	}
+
+	public void snapHistory() {
+		System.out.println("Adding to history");
+		history.add(this.frame.getCanvas().clone());
+		unhistory.clear();
+	}
+
+	public void undo() { 
+		if (history.size() == 0) {
+			System.out.println("Cannot undo 0 length history");
+			return;
+		}
+		Canvas c = history.pop();
+		frame.makeNewCanvas(c);
+		unhistory.push(c);
+	}
+
+	public void redo() {
+		if (unhistory.size() == 0) {
+			System.out.println("Cannot undo 0 length unhistory");
+		}
+		Canvas c = unhistory.pop();
+		frame.makeNewCanvas(c);
+		history.push(c);
+	}
 }
 
 class RunnableIDE implements Runnable {
