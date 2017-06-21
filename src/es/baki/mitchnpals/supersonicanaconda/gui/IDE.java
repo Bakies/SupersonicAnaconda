@@ -12,6 +12,10 @@ public class IDE {
 	private boolean running = false;
 	private boolean firstRun = true;
 
+	public enum Tool {
+		fill;
+	}
+
 	public IDE(int height, int width) {
 		frame = new Frame(this);
 

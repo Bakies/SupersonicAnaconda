@@ -1,13 +1,12 @@
 package es.baki.mitchnpals.supersonicanaconda.gui;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-
-import java.awt.Color;
 
 public class CanvasPanel extends JPanel {
 
@@ -21,13 +20,13 @@ public class CanvasPanel extends JPanel {
 
 	private int height, width;
 
-	private CodelPanel[][] panels, undo;
+	private CodelPanel[][] panels;
 	private Frame f;
 
 	public void setCodelGridSize(int x, int y) {
-		placePanels(x, y);
 		this.height = x; 
 		this.width = y;
+		placePanels(x, y);
 	}
 
 	public int getCodelGridHeight() {
@@ -115,6 +114,7 @@ public class CanvasPanel extends JPanel {
 			return this.codelX;
 		}
 
+		@Override
 		public void setBackground(Color bg) { 
 			super.setBackground(bg);
 		}
@@ -155,7 +155,10 @@ public class CanvasPanel extends JPanel {
 		@Override
 		public void mouseExited(MouseEvent e) {
 			if (selected) {
-				this.setBorderColor(Color.BLUE);
+				this.setBorderColor(Color.BLUE); // FIXME The color is the same
+													// as one of the codel
+													// colors and doesnt look
+													// good
 			} else {
 				this.setBorderColor(Color.BLACK);
 			}
@@ -182,19 +185,20 @@ public class CanvasPanel extends JPanel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			int xSize = Math.max(1, Math.max(mouseDownXCoord, mouseXCoord) - Math.min(mouseDownXCoord, mouseXCoord));
-			int ySize = Math.max(1, Math.max(mouseDownYCoord, mouseYCoord) - Math.min(mouseDownYCoord, mouseYCoord));
+			int maxX, maxY, minX, minY; 
+			maxX = Math.max(mouseDownXCoord, mouseXCoord);
+			maxY = Math.max(mouseDownYCoord, mouseYCoord);
+			
+			minX = Math.min(mouseDownXCoord, mouseXCoord);
+			minY = Math.min(mouseDownYCoord, mouseYCoord);
+			
+			int xSize = maxX - minX + 1;
+			int ySize = minX - minY + 1; 
 			System.out.println("Selection size: " + xSize + " " + ySize);
-			undo = new CodelPanel[ySize][xSize];
 			
-			selectedX = Math.min(mouseDownXCoord, mouseXCoord);
-			selectedY = Math.min(mouseDownYCoord, mouseYCoord);
-			
-			for (int x = Math.min(mouseDownXCoord, mouseXCoord); x <= Math.max(mouseDownXCoord, mouseXCoord); x++) {
-				for (int y = Math.min(mouseDownYCoord, mouseYCoord); y <= Math.max(mouseDownYCoord, mouseYCoord); y ++) {
-					undo[x - Math.min(mouseDownXCoord, mouseXCoord)][y - Math.min(mouseDownYCoord, mouseYCoord)] = panels[x][y];
-					panels[x][y] = new CodelPanel(x, y);
-					panels[x][y].select();
+			for (int x = minX; x <= maxX; x++) {
+				for (int y = minY; y <= maxY; y ++) {
+					panels[x][y].unselect();
 					panels[x][y].setBackground(f.getSelectedColor());
 				}
 			}
@@ -202,13 +206,5 @@ public class CanvasPanel extends JPanel {
 
 		}
 
-	}
-
-	public void undo() {
-		for (int x = selectedX; x < undo.length + selectedX; x ++) {
-			for (int y = selectedY; y < undo[0].length + selectedY; y ++) {
-				panels[x][y] = undo[x - selectedX][y - selectedY];
-			}
-		}
 	}
 }

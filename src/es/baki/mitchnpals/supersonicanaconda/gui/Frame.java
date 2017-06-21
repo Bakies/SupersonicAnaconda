@@ -302,13 +302,12 @@ public class Frame extends JFrame {
 
 		public EditUndoButton(Frame frame, String title) {
 			super();
-			this.parent = parent;
 			this.addActionListener(this);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			parent.canvasPanel.undo();
+			// TODO
 		}
 
 	}
