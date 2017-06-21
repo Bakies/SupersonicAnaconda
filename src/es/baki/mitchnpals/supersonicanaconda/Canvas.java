@@ -3,7 +3,6 @@ package es.baki.mitchnpals.supersonicanaconda;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import es.baki.mitchnpals.supersonicanaconda.Color;
 
 import javax.imageio.ImageIO;
 
@@ -12,7 +11,7 @@ public class Canvas {
 	private Color[][] canvas;
 
 	public Canvas(int width, int height, Canvas canvas) {
-		this(height, width);
+		this(width, height);
 		for (int x = 0; x < canvas.width && x < this.width; x++){
 			for (int y = 0; y < canvas.height && y < this.height; y++){
 				this.canvas[x][y] = canvas.canvas[x][y];
@@ -147,6 +146,7 @@ public class Canvas {
 		return ret.trim();
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 		for (int y = 0; y < width; y ++) {
