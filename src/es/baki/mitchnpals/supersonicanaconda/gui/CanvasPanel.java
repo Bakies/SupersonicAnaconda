@@ -161,8 +161,6 @@ public class CanvasPanel extends JPanel {
 			mouseXCoord = codelX;
 			mouseYCoord = codelY;
 
-			System.out.println("X: " + mouseXCoord + ", Y: " + mouseYCoord);
-
 			if (mouseDown)
 				for (CodelPanel[] x : panels) {
 					for (CodelPanel p : x) {
