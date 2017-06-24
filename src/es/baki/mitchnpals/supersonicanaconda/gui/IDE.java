@@ -77,6 +77,11 @@ public class IDE {
 		return this.frame;
 	}
 
+	/**
+	 * Returns this currently selected tool
+	 * 
+	 * @return the current tool
+	 */
 	public Tool getTool() {
 		return currTool;
 	}
@@ -93,14 +98,19 @@ public class IDE {
 		unhistory.clear();
 	}
 
+	/**
+	 * Adds the current frame's canvas to the history
+	 */
 	public void snapHistory() {
-		System.out.println("Adding to history");
 		history.add(this.frame.getCanvas());
 		unhistory.clear();
 	}
 
+	/**
+	 * Adds the current frames canvas to unhistory and sets the frames canvas to
+	 * the top of the history stack
+	 */
 	public void undo() { 
-		System.out.println("Undoing");
 		if (history.size() == 0) {
 			System.out.println("Cannot undo 0 length history");
 			return;
@@ -110,6 +120,10 @@ public class IDE {
 		frame.makeNewCanvas(c);
 	}
 
+	/**
+	 * Adds the current frames canvas to history and sets the frames canvas to
+	 * the top of the unhistory stack
+	 */
 	public void redo() {
 		System.out.println("Redoing");
 		if (unhistory.size() == 0) {
