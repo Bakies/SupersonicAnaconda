@@ -454,8 +454,6 @@ public class Frame extends JFrame {
 		Canvas canvas = new Canvas(canvasPanel.getCanvasWidth(), canvasPanel.getCanvasHeight());
 		for (int x = 0; x < canvasPanel.getCanvasWidth(); x++) {
 			for (int y = 0; y < canvasPanel.getCanvasHeight(); y++) {
-				// backwards because we are converting out of gui, origins top
-				// left instead of bottom right
 				canvas.set(x, y,
 						es.baki.mitchnpals.supersonicanaconda.Color.awtToBakiesColor(canvasPanel.getColorAt(x, y)));
 			}
