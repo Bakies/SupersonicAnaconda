@@ -80,6 +80,15 @@ public class Frame extends JFrame {
 		this.getRootPane().getInputMap().put(KeyStroke.getKeyStroke("control Z"), "undo");
 		this.getRootPane().getActionMap().put("undo", new UndoAction());
 
+		this.getRootPane().getInputMap().put(KeyStroke.getKeyStroke("control S"), "save");
+		this.getRootPane().getActionMap().put("save", new SaveAction());
+
+		this.getRootPane().getInputMap().put(KeyStroke.getKeyStroke("control O"), "open");
+		this.getRootPane().getActionMap().put("open", new OpenAction());
+
+		this.getRootPane().getInputMap().put(KeyStroke.getKeyStroke("control N"), "new");
+		this.getRootPane().getActionMap().put("new", new NewAction());
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		layoutManager = new GridBagLayout();
 		this.setLayout(layoutManager);
