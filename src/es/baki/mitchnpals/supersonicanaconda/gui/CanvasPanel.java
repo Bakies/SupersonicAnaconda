@@ -15,8 +15,6 @@ public class CanvasPanel extends JPanel {
 	private boolean mouseDown = false;
 	private int mouseDownXCoord = 0, mouseDownYCoord = 0; 
 	private int mouseXCoord = 0, mouseYCoord = 0;
-	private int selectedX = 0, selectedY = 0;
-	private int mouseButton = -1;
 
 	private int height, width;
 
@@ -180,9 +178,6 @@ public class CanvasPanel extends JPanel {
 		public void mouseExited(MouseEvent e) {
 			if (selected) {
 				this.setBorderColor(Color.BLUE); // TODO Change the color
-				// as one of the codel
-				// colors and doesnt look
-				// good
 			} else {
 				this.setBorderColor(Color.BLACK);
 			}
@@ -195,16 +190,20 @@ public class CanvasPanel extends JPanel {
 				return;
 			}
 
-			for (CodelPanel[] x : panels) {
-				for (CodelPanel p : x) {
-					p.unselect();
-				}
-			}
-
 			mouseDownXCoord = codelX;
 			mouseDownYCoord = codelY;
 			mouseDown = true;
-			mouseButton = e.getButton();
+			// You can get mouse button left/right with e.getButton()
+			switch (IDE.getIDE().getTool()) {
+			case fill: // Clear selection since mouse down means we're making a
+						// new selection
+				for (CodelPanel[] x : panels) {
+					for (CodelPanel p : x) {
+						p.unselect();
+					}
+				}
+				break;
+			}
 		}
 
 		@Override

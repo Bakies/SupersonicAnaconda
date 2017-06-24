@@ -184,8 +184,7 @@ public class Canvas {
 		Canvas c = new Canvas(width, height);
 		for (int x = 0; x < width; x ++)  {
 			for (int y = 0; y < height; y ++) {
-				// XXX WHO THE FUCK KNOWS WHY THESE ARE REVERSED AAAAH
-				c.set(y, x, this.getColor(x, y));
+				c.set(x, y, this.getColor(x, y));
 			}
 		}
 		return c;

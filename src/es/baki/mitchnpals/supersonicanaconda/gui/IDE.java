@@ -85,6 +85,9 @@ public class IDE {
 		this.currTool = currToo;
 	}
 
+	/**
+	 * Clears both the redo and undo stacks
+	 */
 	public void clearHistory() {
 		history.clear();
 		unhistory.clear();
@@ -97,22 +100,25 @@ public class IDE {
 	}
 
 	public void undo() { 
+		System.out.println("Undoing");
 		if (history.size() == 0) {
 			System.out.println("Cannot undo 0 length history");
 			return;
 		}
+		unhistory.push(frame.getCanvas().clone());
 		Canvas c = history.pop();
 		frame.makeNewCanvas(c);
-		unhistory.push(c);
 	}
 
 	public void redo() {
+		System.out.println("Redoing");
 		if (unhistory.size() == 0) {
 			System.out.println("Cannot undo 0 length unhistory");
+			return;
 		}
+		history.push(frame.getCanvas().clone());
 		Canvas c = unhistory.pop();
 		frame.makeNewCanvas(c);
-		history.push(c);
 	}
 }
 

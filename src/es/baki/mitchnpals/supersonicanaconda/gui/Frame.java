@@ -457,7 +457,7 @@ public class Frame extends JFrame {
 				// backwards because we are converting out of gui, origins top
 				// left instead of bottom right
 				canvas.set(x, y,
-						es.baki.mitchnpals.supersonicanaconda.Color.awtToBakiesColor(canvasPanel.getColorAt(y, x)));
+						es.baki.mitchnpals.supersonicanaconda.Color.awtToBakiesColor(canvasPanel.getColorAt(x, y)));
 			}
 		}
 		return canvas;
