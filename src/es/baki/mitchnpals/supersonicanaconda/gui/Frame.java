@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -350,8 +351,29 @@ public class Frame extends JFrame {
 		private static final long serialVersionUID = 1L;
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Confirmation dialog i think can go here
-			makeNewCanvas(new Canvas(10, 10));
+			int button = JOptionPane.showConfirmDialog(Frame.this, "Unsaved progress will be lost. Are you sure?");
+			// button: 0 = yes, 1 = no, 2 = cancel
+			if (button == 0) {
+				boolean valid = false;
+				while (!valid) {
+					String input = JOptionPane.showInputDialog(Frame.this,
+							"Input height and width (seperated by a space)");
+					if (input == null)
+						return;
+					try {
+						int height = Integer.parseInt(input.split(" ")[0]);
+						int width = Integer.parseInt(input.split(" ")[1]);
+
+						makeNewCanvas(new Canvas(height, width));
+						valid = true;
+					} catch (Exception e) {
+						// Show another input dialog
+						// This can be indexOutOfBounds
+						// or this can be numberFormat
+						JOptionPane.showMessageDialog(Frame.this, "Bad Input!");
+					}
+				}
+			}
 		}
 
 	}
