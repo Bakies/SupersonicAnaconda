@@ -193,88 +193,17 @@ public class Frame extends JFrame {
 
 		JPanel colors = new JPanel();
 		colors.setLayout(new GridLayout(7, 3, 3, 3));
+		int[] rgb = { 0xFFC0C0, 0xFF0000, 0xC00000, 0xFFFFC0, 0xFFFF00, 0xC0C000, 0xC0FFC0, 0x00FF00, 0x00C000,
+				0xC0FfFF, 0x00FFFF, 0x00C0C0, 0xC0C0FF, 0x0000FF, 0x0000C0, 0xFFC0FF, 0xFF00FF, 0xC000C0, 0xFFFFFF,
+				0x000000 };
+		JPanel[] panels = { lred, red, dred, lyel, yel, dyel, lgrn, grn, dgrn, lcyn, cyn, dcyn, lblu, blu, dblu, lmag,
+				mag, dmag, black, white };
 
-		lred = new ColorSelectorPanel();
-		lred.setBackground(new Color(0xFFC0C0));
-		colors.add(lred);
-
-		red = new ColorSelectorPanel();
-		red.setBackground(new Color(0xFF0000));
-		colors.add(red);
-
-		dred = new ColorSelectorPanel();
-		dred.setBackground(new Color(0xC00000));
-		colors.add(dred);
-
-		lyel = new ColorSelectorPanel();
-		lyel.setBackground(new Color(0xFFFFC0));
-		colors.add(lyel);
-
-		yel = new ColorSelectorPanel();
-		yel.setBackground(new Color(0xFFFF00));
-		colors.add(yel);
-
-		dyel = new ColorSelectorPanel();
-		dyel.setBackground(new Color(0xC0C000));
-		colors.add(dyel);
-
-		lgrn = new ColorSelectorPanel();
-		lgrn.setBackground(new Color(0xC0FFC0));
-		colors.add(lgrn);
-
-		grn = new ColorSelectorPanel();
-		grn.setBackground(new Color(0x00FF00));
-		colors.add(grn);
-
-		dgrn = new ColorSelectorPanel();
-		dgrn.setBackground(new Color(0x00C000));
-		colors.add(dgrn);
-
-		lcyn = new ColorSelectorPanel();
-		lcyn.setBackground(new Color(0xC0FfFF));
-		colors.add(lcyn);
-
-		cyn = new ColorSelectorPanel();
-		cyn.setBackground(new Color(0x00FFFF));
-		colors.add(cyn);
-
-		dcyn = new ColorSelectorPanel();
-		dcyn.setBackground(new Color(0x00C0C0));
-		colors.add(dcyn);
-
-		lblu = new ColorSelectorPanel();
-		lblu.setBackground(new Color(0xC0C0FF));
-		colors.add(lblu);
-
-		blu = new ColorSelectorPanel();
-		blu.setBackground(new Color(0x0000FF));
-		colors.add(blu);
-
-		dblu = new ColorSelectorPanel();
-		dblu.setBackground(new Color(0x0000C0));
-		colors.add(dblu);
-
-		lmag = new ColorSelectorPanel();
-		lmag.setBackground(new Color(0xFFC0FF));
-		colors.add(lmag);
-
-		mag = new ColorSelectorPanel();
-		mag.setBackground(new Color(0xFF00FF));
-		colors.add(mag);
-
-		dmag = new ColorSelectorPanel();
-		dmag.setBackground(new Color(0xC000C0));
-		colors.add(dmag);
-
-		white = new ColorSelectorPanel();
-		white.setBackground(new Color(0xFFFFFF));
-		colors.add(white);
-
-		colors.add(new JPanel());
-
-		black = new ColorSelectorPanel();
-		black.setBackground(new Color(0x000000));
-		colors.add(black);
+		for (int x = 0; x < rgb.length; x++) {
+			panels[x] = new ColorSelectorPanel();
+			panels[x].setBackground(new Color(rgb[x]));
+			colors.add(panels[x]);
+		}
 
 		colorsPickerPanel.add(colors);
 	}
