@@ -9,11 +9,11 @@ import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import es.baki.mitchnpals.supersonicanaconda.Canvas;
 
@@ -34,9 +35,9 @@ public class Frame extends JFrame {
 	private MenuBar menubar;
 	private Menu fileMenu;
 	private Menu editMenu;
-	private FileOpenButton open;
-	private FileNewButton newCanvas;
-	private FileSaveButton save;
+	private MenuItem open;
+	private MenuItem newCanvas;
+	private MenuItem save;
 	private MenuItem undo;
 	private MenuItem redo;
 
@@ -68,9 +69,12 @@ public class Frame extends JFrame {
 		return selectedColorPanel.getBackground();
 	}
 
+
 	public Frame() {
 		super("Supersonic Anaconda");
 
+		this.getRootPane().getInputMap().put(KeyStroke.getKeyStroke("control Z"), "undo");
+		this.getRootPane().getActionMap().put("undo", new UndoAction());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		layoutManager = new GridBagLayout();
 		this.setLayout(layoutManager);
@@ -133,7 +137,7 @@ public class Frame extends JFrame {
 
 		toolFillButton = new JButton("Fill");
 		toolFillButton.setEnabled(false);
-		toolFillButton.addActionListener(new ButtonFillToolActionListener());
+		toolFillButton.addActionListener(new FillToolAction());
 	}
 
 	public void toolChange() {
@@ -149,15 +153,15 @@ public class Frame extends JFrame {
 
 		debugRunButton = new JButton("Run");
 		debugPanel.add(debugRunButton);
-		debugRunButton.addActionListener(new ButtonRunActionListener());
+		debugRunButton.addActionListener(new RunAction());
 
 		debugStopButton = new JButton("Stop");
 		debugPanel.add(debugStopButton);
-		debugStopButton.addActionListener(new ButtonStopActionListener());
+		debugStopButton.addActionListener(new StopAction());
 
 		debugStepButton = new JButton("Step");
 		debugPanel.add(debugStepButton);
-		debugStepButton.addActionListener(new ButtonStepActionListener());
+		debugStepButton.addActionListener(new StepAction());
 
 	}
 
@@ -176,85 +180,85 @@ public class Frame extends JFrame {
 		JPanel colors = new JPanel();
 		colors.setLayout(new GridLayout(7, 3, 3, 3));
 
-		lred = new ColorSelectorPanel(this);
+		lred = new ColorSelectorPanel();
 		lred.setBackground(new Color(0xFFC0C0));
 		colors.add(lred);
 
-		red = new ColorSelectorPanel(this);
+		red = new ColorSelectorPanel();
 		red.setBackground(new Color(0xFF0000));
 		colors.add(red);
 
-		dred = new ColorSelectorPanel(this);
+		dred = new ColorSelectorPanel();
 		dred.setBackground(new Color(0xC00000));
 		colors.add(dred);
 
-		lyel = new ColorSelectorPanel(this);
+		lyel = new ColorSelectorPanel();
 		lyel.setBackground(new Color(0xFFFFC0));
 		colors.add(lyel);
 
-		yel = new ColorSelectorPanel(this);
+		yel = new ColorSelectorPanel();
 		yel.setBackground(new Color(0xFFFF00));
 		colors.add(yel);
 
-		dyel = new ColorSelectorPanel(this);
+		dyel = new ColorSelectorPanel();
 		dyel.setBackground(new Color(0xC0C000));
 		colors.add(dyel);
 
-		lgrn = new ColorSelectorPanel(this);
+		lgrn = new ColorSelectorPanel();
 		lgrn.setBackground(new Color(0xC0FFC0));
 		colors.add(lgrn);
 
-		grn = new ColorSelectorPanel(this);
+		grn = new ColorSelectorPanel();
 		grn.setBackground(new Color(0x00FF00));
 		colors.add(grn);
 
-		dgrn = new ColorSelectorPanel(this);
+		dgrn = new ColorSelectorPanel();
 		dgrn.setBackground(new Color(0x00C000));
 		colors.add(dgrn);
 
-		lcyn = new ColorSelectorPanel(this);
+		lcyn = new ColorSelectorPanel();
 		lcyn.setBackground(new Color(0xC0FfFF));
 		colors.add(lcyn);
 
-		cyn = new ColorSelectorPanel(this);
+		cyn = new ColorSelectorPanel();
 		cyn.setBackground(new Color(0x00FFFF));
 		colors.add(cyn);
 
-		dcyn = new ColorSelectorPanel(this);
+		dcyn = new ColorSelectorPanel();
 		dcyn.setBackground(new Color(0x00C0C0));
 		colors.add(dcyn);
 
-		lblu = new ColorSelectorPanel(this);
+		lblu = new ColorSelectorPanel();
 		lblu.setBackground(new Color(0xC0C0FF));
 		colors.add(lblu);
 
-		blu = new ColorSelectorPanel(this);
+		blu = new ColorSelectorPanel();
 		blu.setBackground(new Color(0x0000FF));
 		colors.add(blu);
 
-		dblu = new ColorSelectorPanel(this);
+		dblu = new ColorSelectorPanel();
 		dblu.setBackground(new Color(0x0000C0));
 		colors.add(dblu);
 
-		lmag = new ColorSelectorPanel(this);
+		lmag = new ColorSelectorPanel();
 		lmag.setBackground(new Color(0xFFC0FF));
 		colors.add(lmag);
 
-		mag = new ColorSelectorPanel(this);
+		mag = new ColorSelectorPanel();
 		mag.setBackground(new Color(0xFF00FF));
 		colors.add(mag);
 
-		dmag = new ColorSelectorPanel(this);
+		dmag = new ColorSelectorPanel();
 		dmag.setBackground(new Color(0xC000C0));
 		colors.add(dmag);
 
-		white = new ColorSelectorPanel(this);
+		white = new ColorSelectorPanel();
 		white.setBackground(new Color(0xFFFFFF));
 		colors.add(white);
 
 		colors.add(new JPanel());
 
-		black = new ColorSelectorPanel(this);
+		black = new ColorSelectorPanel();
 		black.setBackground(new Color(0x000000));
 		colors.add(black);
 
@@ -266,9 +270,13 @@ public class Frame extends JFrame {
 		fileMenu = new Menu("File");
 
 		// File menu
-		newCanvas = new FileNewButton("New");
-		open = new FileOpenButton(this, "Open");
-		save = new FileSaveButton(this, "Save");
+		newCanvas = new MenuItem("New");
+		open = new MenuItem("Open");
+		save = new MenuItem("Save");
+
+		newCanvas.addActionListener(new NewAction());
+		open.addActionListener(new OpenAction());
+		save.addActionListener(new SaveAction());
 
 		fileMenu.add(newCanvas);
 		fileMenu.add(open);
@@ -279,100 +287,15 @@ public class Frame extends JFrame {
 		// Edit Menu
 		editMenu = new Menu("Edit");
 		undo = new MenuItem("Undo");
-		undo.addActionListener(new EditUndoButton());
+		redo = new MenuItem("Redo");
+
+		undo.addActionListener(new UndoAction());
+		redo.addActionListener(new RedoAction());
+
+		editMenu.add(redo);
 		editMenu.add(undo);
 
-		redo = new MenuItem("Redo");
-		redo.addActionListener(new EditRedoButton());
-		editMenu.add(redo);
-
 		menubar.add(editMenu);
-
-	}
-
-	private class FileOpenButton extends MenuItem implements ActionListener {
-		private static final long serialVersionUID = 7904843145726959810L;
-		private Frame parent;
-
-		public FileOpenButton(Frame parent, String title) {
-			super(title);
-			this.addActionListener(this);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			final JFileChooser fc = new JFileChooser();
-			fc.showDialog(parent, "Open");
-
-			File file = fc.getSelectedFile();
-			IDE.getIDE().clearHistory();
-			makeNewCanvas(Canvas.readFromFile(file));
-			IDE.getIDE().snapHistory();
-		}
-
-	}
-
-	private class EditUndoButton implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			IDE.getIDE().undo();
-		}
-
-	}
-
-	private class EditRedoButton implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			IDE.getIDE().redo();
-		}
-
-	}
-
-	private class FileSaveButton extends MenuItem implements ActionListener {
-		private static final long serialVersionUID = 7904843145726959811L;
-		private Frame parent;
-
-		public FileSaveButton(Frame parent, String title) {
-			super(title);
-			this.parent = parent;
-			this.addActionListener(this);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			final JFileChooser fc = new JFileChooser();
-			fc.showDialog(parent, "Save");
-
-			File file = fc.getSelectedFile();
-			System.out.println(getCanvas());
-			getCanvas().exportToPNG(file);
-		}
-
-	}
-
-	private class FileNewButton extends MenuItem implements ActionListener {
-		private static final long serialVersionUID = 7904843145726959812L;
-
-		public FileNewButton(String title) {
-			super(title);
-			this.addActionListener(this);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			makeNewCanvas(new Canvas(1, 10));
-		}
-
-	}
-
-	private class ButtonFillToolActionListener extends MenuItem implements ActionListener {
-		private static final long serialVersionUID = 7904843145726959812L;
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			IDE.getIDE().setTool(IDE.Tool.fill);
-		}
-
 	}
 
 	private void makeIOPanel() {
@@ -389,19 +312,28 @@ public class Frame extends JFrame {
 		ioPanel.add(ioOutput);
 	}
 
-	@SuppressWarnings("serial")
-	public class ColorSelectorPanel extends JPanel implements MouseListener {
-		private Frame f;
+	public Canvas getCanvas() {
+		Canvas canvas = new Canvas(canvasPanel.getCanvasWidth(), canvasPanel.getCanvasHeight());
+		for (int x = 0; x < canvasPanel.getCanvasWidth(); x++) {
+			for (int y = 0; y < canvasPanel.getCanvasHeight(); y++) {
+				canvas.set(x, y,
+						es.baki.mitchnpals.supersonicanaconda.Color.awtToBakiesColor(canvasPanel.getColorAt(x, y)));
+			}
+		}
+		return canvas;
+	}
 
-		public ColorSelectorPanel(Frame f) {
+	public class ColorSelectorPanel extends JPanel implements MouseListener {
+		private static final long serialVersionUID = 1L;
+
+		public ColorSelectorPanel() {
 			this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 			this.addMouseListener(this);
-			this.f = f;
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			f.selectedColorPanel.setBackground(this.getBackground());
+			Frame.this.selectedColorPanel.setBackground(this.getBackground());
 		}
 
 		@Override
@@ -428,7 +360,69 @@ public class Frame extends JFrame {
 
 	}
 
-	public class ButtonStopActionListener implements ActionListener {
+	private class OpenAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO probably "are you sure" box here
+			final JFileChooser fc = new JFileChooser();
+			fc.showDialog(Frame.this, "Open");
+
+			File file = fc.getSelectedFile();
+			IDE.getIDE().clearHistory();
+			makeNewCanvas(Canvas.readFromFile(file));
+			IDE.getIDE().snapHistory();
+		}
+
+	}
+
+	private class RedoAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			IDE.getIDE().redo();
+		}
+
+	}
+
+	private class SaveAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			final JFileChooser fc = new JFileChooser();
+			fc.showDialog(Frame.this, "Save");
+
+			File file = fc.getSelectedFile();
+			System.out.println(getCanvas());
+			getCanvas().exportToPNG(file);
+		}
+
+	}
+
+	private class NewAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Confirmation dialog i think can go here
+			makeNewCanvas(new Canvas(10, 10));
+		}
+
+	}
+
+	public class UndoAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			IDE.getIDE().undo();
+		}
+	}
+
+
+	public class StopAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			IDE.getIDE().stopInterpreter();
@@ -436,28 +430,28 @@ public class Frame extends JFrame {
 
 	}
 
-	public class ButtonStepActionListener implements ActionListener {
+	public class StepAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			IDE.getIDE().stepInterpreter();
 		}
 	}
 
-	public class ButtonRunActionListener implements ActionListener {
+	public class RunAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			IDE.getIDE().runInterpreter();
 		}
 	}
 
-	public Canvas getCanvas() {
-		Canvas canvas = new Canvas(canvasPanel.getCanvasWidth(), canvasPanel.getCanvasHeight());
-		for (int x = 0; x < canvasPanel.getCanvasWidth(); x++) {
-			for (int y = 0; y < canvasPanel.getCanvasHeight(); y++) {
-				canvas.set(x, y,
-						es.baki.mitchnpals.supersonicanaconda.Color.awtToBakiesColor(canvasPanel.getColorAt(x, y)));
-			}
+	private class FillToolAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			IDE.getIDE().setTool(IDE.Tool.fill);
 		}
-		return canvas;
 	}
 }

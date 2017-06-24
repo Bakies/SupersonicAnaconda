@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 
 public class Interpreter {	
-	private ArrayList<Codel> checked, lastBlock;
+	private ArrayList<Codel> checked;
 	private Codel codel;
 	private Stack stack;
 	public Canvas canvas;
@@ -168,8 +168,9 @@ public class Interpreter {
 		return total;
 	}
 	public static void main(String[] args) {
+		/*
 		Interpreter i = new Interpreter(Canvas.readFromFile("fizzbuzz.png"), System.in);
-		/*i.toggleDebug();
+		i.toggleDebug();
 		while (true) {
 			try {
 				i.step();
