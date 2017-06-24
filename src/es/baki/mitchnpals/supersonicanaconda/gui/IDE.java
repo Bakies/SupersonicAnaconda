@@ -95,7 +95,7 @@ public class IDE {
 
 	public void snapHistory() {
 		System.out.println("Adding to history");
-		history.add(this.frame.getCanvas().clone());
+		history.add(this.frame.getCanvas());
 		unhistory.clear();
 	}
 
@@ -105,7 +105,7 @@ public class IDE {
 			System.out.println("Cannot undo 0 length history");
 			return;
 		}
-		unhistory.push(frame.getCanvas().clone());
+		unhistory.push(frame.getCanvas());
 		Canvas c = history.pop();
 		frame.makeNewCanvas(c);
 	}
@@ -116,7 +116,7 @@ public class IDE {
 			System.out.println("Cannot undo 0 length unhistory");
 			return;
 		}
-		history.push(frame.getCanvas().clone());
+		history.push(frame.getCanvas());
 		Canvas c = unhistory.pop();
 		frame.makeNewCanvas(c);
 	}
