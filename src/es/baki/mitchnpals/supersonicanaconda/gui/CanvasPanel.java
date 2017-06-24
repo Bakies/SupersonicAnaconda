@@ -218,10 +218,6 @@ public class CanvasPanel extends JPanel {
 				minX = Math.min(mouseDownXCoord, mouseXCoord);
 				minY = Math.min(mouseDownYCoord, mouseYCoord);
 
-				int xSize = maxX - minX + 1;
-				int ySize = minX - minY + 1;
-				System.out.println("Selection size: " + xSize + " " + ySize);
-
 				for (int x = minX; x <= maxX; x++) {
 					for (int y = minY; y <= maxY; y++) {
 						panels[x][y].unselect();
