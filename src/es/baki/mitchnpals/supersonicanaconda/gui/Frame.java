@@ -95,8 +95,10 @@ public class Frame extends JFrame {
 		this.setLayout(layoutManager);
 		GridBagConstraints c = new GridBagConstraints();
 
-		makeIOPanel();
+		c.anchor = GridBagConstraints.NORTHEAST;
 		c.fill = GridBagConstraints.BOTH;
+
+		makeIOPanel();
 		c.gridx = 0;
 		c.gridy = 0;
 		this.add(ioPanel, c);
@@ -161,23 +163,29 @@ public class Frame extends JFrame {
 
 	private void makeDebugPanel() {
 		debugPanel = new JPanel();
-		debugPanel.setLayout(new BoxLayout(debugPanel, BoxLayout.Y_AXIS));
+		debugPanel.setLayout(new GridBagLayout());
 
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
 		debugTitle = new JLabel("Debug");
-		debugPanel.add(debugTitle);
+		c.gridx = 0;
+		c.gridy = 0;
+		debugPanel.add(debugTitle, c);
 
 		debugRunButton = new JButton("Run");
-		debugPanel.add(debugRunButton);
+		c.gridy = 1;
+		debugPanel.add(debugRunButton, c);
 		debugRunButton.addActionListener(new RunAction());
 
 		debugStopButton = new JButton("Stop");
-		debugPanel.add(debugStopButton);
+		c.gridy = 2;
+		debugPanel.add(debugStopButton, c);
 		debugStopButton.addActionListener(new StopAction());
 
 		debugStepButton = new JButton("Step");
-		debugPanel.add(debugStepButton);
+		c.gridy = 3;
+		debugPanel.add(debugStepButton, c);
 		debugStepButton.addActionListener(new StepAction());
-
 	}
 
 	private void makeColorPickerPanel() {
@@ -246,14 +254,23 @@ public class Frame extends JFrame {
 		ioPanel = new JPanel();
 		ioPanel.setLayout(new GridBagLayout());
 
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.NORTHEAST;
+		c.fill = GridBagConstraints.HORIZONTAL;
+
 		ioTitle = new JLabel("Input/Output");
-		ioPanel.add(ioTitle);
+		c.gridx = 0;
+		c.gridy = 0;
+		ioPanel.add(ioTitle, c);
 
 		ioInput = new JTextField();
-		ioPanel.add(ioInput);
+		c.gridy++;
+		ioPanel.add(ioInput, c);
 
 		ioOutput = new JTextArea();
-		ioPanel.add(ioOutput);
+		c.gridy++;
+		c.fill = GridBagConstraints.BOTH;
+		ioPanel.add(ioOutput, c);
 	}
 
 	public Canvas getCanvas() {
@@ -308,11 +325,13 @@ public class Frame extends JFrame {
 		private static final long serialVersionUID = 1L;
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO probably "are you sure" box here
+			JOptionPane.showMessageDialog(Frame.this, "Opening a new file will discard any unsaved work");
 			final JFileChooser fc = new JFileChooser();
 			fc.showDialog(Frame.this, "Open");
 
 			File file = fc.getSelectedFile();
+			if (file == null)
+				return; // User canceled action
 			IDE.getIDE().clearHistory();
 			makeNewCanvas(Canvas.readFromFile(file));
 			IDE.getIDE().snapHistory();
