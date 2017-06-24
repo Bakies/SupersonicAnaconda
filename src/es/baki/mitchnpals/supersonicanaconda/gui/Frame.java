@@ -95,8 +95,10 @@ public class Frame extends JFrame {
 		this.setLayout(layoutManager);
 		GridBagConstraints c = new GridBagConstraints();
 
-		c.anchor = GridBagConstraints.NORTHEAST;
+		c.anchor = GridBagConstraints.NORTHWEST;
 		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1.0;
+		c.weighty = 1.0;
 
 		makeIOPanel();
 		c.gridx = 0;
