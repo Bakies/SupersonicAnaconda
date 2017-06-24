@@ -338,6 +338,8 @@ public class Frame extends JFrame {
 			fc.showDialog(Frame.this, "Save");
 
 			File file = fc.getSelectedFile();
+			if (file == null) // Dialog gets cancelled, do not continue
+				return;
 			System.out.println(getCanvas());
 			getCanvas().exportToPNG(file);
 		}
