@@ -365,6 +365,7 @@ public class Frame extends JFrame {
 						int width = Integer.parseInt(input.split(" ")[1]);
 
 						makeNewCanvas(new Canvas(height, width));
+						IDE.getIDE().clearHistory();
 						valid = true;
 					} catch (Exception e) {
 						// Show another input dialog
