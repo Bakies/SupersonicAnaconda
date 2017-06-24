@@ -73,8 +73,13 @@ public class Frame extends JFrame {
 	public Frame() {
 		super("Supersonic Anaconda");
 
+		// Hotkeys
+		this.getRootPane().getInputMap().put(KeyStroke.getKeyStroke("control Y"), "redo");
+		this.getRootPane().getActionMap().put("redo", new RedoAction());
+
 		this.getRootPane().getInputMap().put(KeyStroke.getKeyStroke("control Z"), "undo");
 		this.getRootPane().getActionMap().put("undo", new UndoAction());
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		layoutManager = new GridBagLayout();
 		this.setLayout(layoutManager);
