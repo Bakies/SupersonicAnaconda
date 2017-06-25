@@ -19,7 +19,7 @@ public class IDE {
 	private Stack<Canvas> history, unhistory;
 
 	public enum Tool {
-		fill;
+		fill, pencil;
 	}
 
 	private IDE(int height, int width) {
@@ -88,6 +88,7 @@ public class IDE {
 
 	public void setTool(Tool currToo) {
 		this.currTool = currToo;
+		this.frame.toolChange();
 	}
 
 	/**

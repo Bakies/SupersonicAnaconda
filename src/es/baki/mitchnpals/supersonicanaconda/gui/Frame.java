@@ -62,7 +62,8 @@ public class Frame extends JFrame {
 
 	private JPanel toolPickerPanel;
 	private JLabel toolPickerTitle;
-	private JButton toolFillButton; // TODO I think
+	private JButton toolFillButton;
+	private JButton toolPencilButton;
 
 	private CanvasPanel canvasPanel;
 
@@ -97,8 +98,6 @@ public class Frame extends JFrame {
 
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.fill = GridBagConstraints.BOTH;
-		c.weightx = 1.0;
-		c.weighty = 1.0;
 
 		makeIOPanel();
 		c.gridx = 0;
@@ -120,7 +119,7 @@ public class Frame extends JFrame {
 		this.add(toolPickerPanel, c);
 
 		canvasPanel = new CanvasPanel(10, 10, this);
-		canvasPanel.setAutoscrolls(true);
+		// canvasPanel.setAutoscrolls(true);
 		c.fill = GridBagConstraints.NONE;
 		c.gridx = 2;
 		c.gridy = 0;
@@ -133,6 +132,7 @@ public class Frame extends JFrame {
 
 		this.pack();
 		this.setVisible(true);
+		canvasPanel.setMinimumSize(canvasPanel.getSize());
 		this.setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
 
 	}
@@ -157,10 +157,23 @@ public class Frame extends JFrame {
 		toolFillButton = new JButton("Fill");
 		toolFillButton.setEnabled(false);
 		toolFillButton.addActionListener(new FillToolAction());
+		toolPickerPanel.add(toolFillButton);
+
+		toolPencilButton = new JButton("Pencil");
+		toolPencilButton.addActionListener(new PencilToolAction());
+		toolPickerPanel.add(toolPencilButton);
 	}
 
-	public void toolChange() {
-		// TODO make the current tool disabled, enable others
+	public void toolChange() { // TODO Make this more extensible
+		JButton[] buttons = { toolFillButton, toolPencilButton };
+
+		for (JButton b : buttons)
+			b.setEnabled(true);
+
+		if (IDE.getIDE().getTool() == IDE.Tool.fill)
+			toolFillButton.setEnabled(false);
+		if (IDE.getIDE().getTool() == IDE.Tool.pencil)
+			toolPencilButton.setEnabled(false);
 	}
 
 	private void makeDebugPanel() {
@@ -177,7 +190,7 @@ public class Frame extends JFrame {
 		debugRunButton = new JButton("Run");
 		c.gridy = 1;
 		debugPanel.add(debugRunButton, c);
-		debugRunButton.addActionListener(new RunAction());
+		debugRunButton.addActionListener(this.getRootPane().getActionMap().get("new"));
 
 		debugStopButton = new JButton("Stop");
 		c.gridy = 2;
@@ -228,7 +241,8 @@ public class Frame extends JFrame {
 		open = new MenuItem("Open");
 		save = new MenuItem("Save");
 
-		newCanvas.addActionListener(new NewAction());
+		// newCanvas.addActionListener(new NewAction());
+		newCanvas.addActionListener(this.getRootPane().getActionMap().get("new"));
 		open.addActionListener(new OpenAction());
 		save.addActionListener(new SaveAction());
 
@@ -441,6 +455,15 @@ public class Frame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			IDE.getIDE().setTool(IDE.Tool.fill);
+		}
+	}
+
+	private class PencilToolAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			IDE.getIDE().setTool(IDE.Tool.pencil);
 		}
 	}
 }

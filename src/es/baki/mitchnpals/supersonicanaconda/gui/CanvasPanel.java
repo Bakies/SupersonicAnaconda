@@ -1,6 +1,7 @@
 package es.baki.mitchnpals.supersonicanaconda.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -123,6 +124,8 @@ public class CanvasPanel extends JPanel {
 
 			this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			this.setBackground(java.awt.Color.white);
+			this.setMinimumSize(new Dimension(10, 10));
+			this.setMaximumSize(new Dimension(10, 10));
 
 			this.addMouseListener(this);
 
@@ -158,19 +161,24 @@ public class CanvasPanel extends JPanel {
 
 			mouseXCoord = codelX;
 			mouseYCoord = codelY;
-
-			if (mouseDown)
-				for (CodelPanel[] x : panels) {
-					for (CodelPanel p : x) {
-						p.unselect();
+			switch (IDE.getIDE().getTool()){
+			case fill:
+				if (mouseDown) {
+					for (CodelPanel[] x : panels) {
+						for (CodelPanel p : x) {
+							p.unselect();
+						}
+					}
+					for (int x = Math.min(mouseDownXCoord, codelX); x <= Math.max(mouseDownXCoord, codelX); x++) {
+						for (int y = Math.min(mouseDownYCoord, codelY); y <= Math.max(mouseDownYCoord, codelY); y ++) {
+							panels[x][y].select();
+						}
 					}
 				}
-			if (mouseDown) {
-				for (int x = Math.min(mouseDownXCoord, codelX); x <= Math.max(mouseDownXCoord, codelX); x++) {
-					for (int y = Math.min(mouseDownYCoord, codelY); y <= Math.max(mouseDownYCoord, codelY); y ++) {
-						panels[x][y].select();
-					}
-				}
+				break;
+			case pencil:
+				if (mouseDown)
+					this.setBackground(f.getSelectedColor());
 			}
 		}
 
@@ -196,18 +204,22 @@ public class CanvasPanel extends JPanel {
 			// You can get mouse button left/right with e.getButton()
 			switch (IDE.getIDE().getTool()) {
 			case fill: // Clear selection since mouse down means we're making a
-						// new selection
+				// new selection
 				for (CodelPanel[] x : panels) {
 					for (CodelPanel p : x) {
 						p.unselect();
 					}
 				}
 				break;
+			case pencil:
+				this.setBackground(f.getSelectedColor());
+				break;
 			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			mouseDown = false;
 			switch (IDE.getIDE().getTool()) {
 			case fill:
 				IDE.getIDE().snapHistory();
@@ -220,11 +232,11 @@ public class CanvasPanel extends JPanel {
 
 				for (int x = minX; x <= maxX; x++) {
 					for (int y = minY; y <= maxY; y++) {
-						panels[x][y].unselect();
 						panels[x][y].setBackground(f.getSelectedColor());
 					}
 				}
-				mouseDown = false;
+				break;
+			case pencil:
 				break;
 			}
 		}
